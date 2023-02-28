@@ -255,7 +255,7 @@ class _ScreenEditState extends State<ScreenEdit> {
                             .toString()
                             .replaceRange(10, null, ''),
                         style:
-                            TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+                            const TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
                       ),
                       style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -321,11 +321,11 @@ class _ScreenEditState extends State<ScreenEdit> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 14, 31, 51),
+        backgroundColor: const Color.fromARGB(255, 14, 31, 51),
           onPressed: () {
             editTransaction();
           },
-          child: Icon(
+          child: const Icon(
             Icons.thumb_up_alt,
             color: Color.fromARGB(255, 206, 164, 52),
           )),

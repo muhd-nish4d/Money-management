@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:tracker/db_functions/category/category_db_functions.dart';
 
 import 'package:tracker/screens/home_screen.dart';
+
+import '../db_functions/transactions/transaction_db_functions.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
@@ -21,6 +24,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
 
   @override
   Widget build(BuildContext context) {
+    CategoryDB.instance.refreshUI();
+    TransactionDB.instance.refreshTransUI();
     // return Scaffold(
     //   body: Center(
     //     child: Text('data',style: TextStyle(color: Colors.amber),),

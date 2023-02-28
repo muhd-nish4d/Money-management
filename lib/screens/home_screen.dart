@@ -16,12 +16,12 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TransactionDB.instance.refreshTransUI();
+    // TransactionDB.instance.refreshTransUI();
     return Scaffold(
       //rgb(247, 247, 247)
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(55),
+          preferredSize: const Size.fromHeight(55),
           child: WidgetAppBar(title: 'Money Tracker')),
       drawer: const Drawer(
         shape: RoundedRectangleBorder(
@@ -47,23 +47,23 @@ class ScreenHome extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           //rgb(57, 62, 70)
                           //rgb(109, 152, 134)
-                          color: Color.fromARGB(255, 109, 152, 134)),
+                          color: const Color.fromARGB(255, 109, 152, 134)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Column(
-                            children: [
-                              Text(
+                            children:const [
+                               Text(
                                 'Total',
                                 style: TextStyle(
                                     color: greyd,
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Text(
+                               Text(
                                 '₹9999.0',
                                 style: TextStyle(
-                                  // rgb(242, 231, 213)
+                                    // rgb(242, 231, 213)
                                     color: greyd,
                                     fontSize: 40,
                                     fontFamily: 'Inter',
@@ -78,10 +78,10 @@ class ScreenHome extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Row(
-                                    children: [
-                                      Icon(Icons.arrow_upward_rounded,
+                                    children:const [
+                                       Icon(Icons.arrow_upward_rounded,
                                           color: greyd),
-                                      Text(
+                                       Text(
                                         'Income',
                                         style: TextStyle(
                                             color: greyd,
@@ -90,7 +90,7 @@ class ScreenHome extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  Text(
+                                  const Text(
                                     '₹999.0',
                                     style: TextStyle(
                                         color: greyd,
@@ -104,10 +104,10 @@ class ScreenHome extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Row(
-                                    children: [
-                                      Icon(Icons.arrow_downward_rounded,
+                                    children:const [
+                                       Icon(Icons.arrow_downward_rounded,
                                           color: greyd),
-                                      Text(
+                                       Text(
                                         'Expense',
                                         style: TextStyle(
                                             color: greyd,
@@ -116,7 +116,7 @@ class ScreenHome extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  Text(
+                                  const Text(
                                     '₹999.0',
                                     style: TextStyle(
                                         color: greyd,
@@ -131,7 +131,8 @@ class ScreenHome extends StatelessWidget {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(25)),
-                                      backgroundColor: const Color.fromARGB(255, 255, 255, 232)),
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 255, 255, 232)),
                                   onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -142,11 +143,11 @@ class ScreenHome extends StatelessWidget {
                                     padding:
                                         const EdgeInsets.symmetric(vertical: 9),
                                     child: Column(
-                                      children: [
-                                        Icon(Icons.analytics_rounded,
+                                      children:const [
+                                         Icon(Icons.analytics_rounded,
                                             color: greyd),
-                                        const SizedBox(),
-                                        Text(
+                                         SizedBox(),
+                                         Text(
                                           'Observe',
                                           style: TextStyle(
                                             color: greyd,
@@ -219,7 +220,7 @@ class ScreenHome extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Recent',
                                     style: TextStyle(
                                         color: greyd,
@@ -234,7 +235,7 @@ class ScreenHome extends StatelessWidget {
                                           // useRootNavigator: false
                                         );
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'View all',
                                         style: TextStyle(color: greyd),
                                       ))
@@ -245,42 +246,50 @@ class ScreenHome extends StatelessWidget {
                               padding:
                                   const EdgeInsets.only(left: 20, right: 20),
                               child: SizedBox(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * .37,
-                                  child: ValueListenableBuilder(
-                                    valueListenable: TransactionDB
-                                        .instance.transactionListNotifier,
-                                    builder: (context, value, child) {
-                                      return GridView.builder(
-                                        // primary: true,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          childAspectRatio: 1.1,
-                                          crossAxisSpacing: 40,
-                                          mainAxisSpacing: 20,
-                                        ),
-                                        itemBuilder: (context, index) {
-                                          final newValue = value[index];
-                                          final transObj = TransactionModel(
-                                            id: newValue.id,
-                                            amount: newValue.amount,
-                                            date: newValue.date,
-                                            note: newValue.note,
-                                            type: newValue.type,
-                                            category: newValue.category,
-                                          );
-                                          return WidgetHomeTransactions(
-                                            transObj: transObj,
-                                          );
-                                        },
-                                        itemCount: value.length <= 3
-                                            ? value.length
-                                            : 4,
-                                      );
-                                    },
-                                  )),
+                                width: double.infinity,
+                                height:
+                                    MediaQuery.of(context).size.height * .37,
+                                child: ValueListenableBuilder(
+                                  valueListenable: TransactionDB
+                                      .instance.transactionListNotifier,
+                                  builder: (context, value, child) {
+                                    return 
+                                     TransactionDB
+                                      .instance.transactionListNotifier.value.isEmpty?
+                                      IconButton(onPressed: (){
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const ScreenAddTransBtn()));
+                                      }, icon: const Icon(Icons.add,size: 50,)):
+                                    GridView.builder(
+                                      // primary: true,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 1.1,
+                                        crossAxisSpacing: 40,
+                                        mainAxisSpacing: 20,
+                                      ),
+
+                                      itemBuilder: (context, index) {
+                                        final newValue = value[index];
+                                        final transObj = TransactionModel(
+                                          id: newValue.id,
+                                          amount: newValue.amount,
+                                          date: newValue.date,
+                                          note: newValue.note,
+                                          type: newValue.type,
+                                          category: newValue.category,
+                                        );
+                                        return WidgetHomeTransactions(
+                                          transObj: transObj,
+                                        );
+                                      },
+                                      itemCount:
+                                          value.length <= 3 ? value.length : 4,
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -300,9 +309,9 @@ class ScreenHome extends StatelessWidget {
                                     const Color.fromARGB(255, 109, 152, 134)),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => ScreenAddTransBtn()));
+                                  builder: (ctx) => const ScreenAddTransBtn()));
                             },
-                            child: Text(
+                            child: const Text(
                               'Income',
                               style: TextStyle(
                                   color: greyWhite,
@@ -316,13 +325,13 @@ class ScreenHome extends StatelessWidget {
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                                  Color.fromARGB(255, 109, 152, 134),
+                                  const Color.fromARGB(255, 109, 152, 134),
                             ),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => ScreenAddTransBtn()));
+                                  builder: (ctx) => const ScreenAddTransBtn()));
                             },
-                            child: Text('Expense',
+                            child: const Text('Expense',
                                 style: TextStyle(
                                     color: greyWhite,
                                     fontSize: 20,
@@ -338,7 +347,7 @@ class ScreenHome extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: CircleAvatar(
-                  backgroundColor: const Color.fromARGB(255, 247, 247, 247) ,
+                  backgroundColor: const Color.fromARGB(255, 247, 247, 247),
                   radius: 50,
                   child: CircleAvatar(
                       radius: 43,
@@ -349,7 +358,7 @@ class ScreenHome extends StatelessWidget {
                             builder: (ctx) => const ScreenCategory(),
                           ));
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.difference_rounded,
                           color: greyWhite,
                           size: 35,

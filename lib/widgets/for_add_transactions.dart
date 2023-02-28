@@ -50,11 +50,11 @@ Future<void> showCategoryAddPopupInTrans(BuildContext context) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        backgroundColor: Color.fromARGB(255, 18, 41, 72),
+        backgroundColor: const Color.fromARGB(255, 18, 41, 72),
         title: Row(
-          children: [
-            RadioButtonWidgetforAdd(title: 'Income', type: CategoryType.income),
-            RadioButtonWidgetforAdd(
+          children:const [
+             RadioButtonWidgetforAdd(title: 'Income', type: CategoryType.income),
+             RadioButtonWidgetforAdd(
                 title: 'Expense', type: CategoryType.expense)
           ],
         ),
@@ -101,7 +101,7 @@ Future<void> showCategoryAddPopupInTrans(BuildContext context) async {
                     CategoryDB.instance.insertCategory(category);
                 Navigator.of(context).pop();
               },
-              child: Text(
+              child: const Text(
                 'Done',
                 style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
               ))

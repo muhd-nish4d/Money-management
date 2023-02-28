@@ -4,6 +4,8 @@ import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/screens/category_screens/expense_screen.dart';
 import 'package:tracker/screens/category_screens/income_screen.dart';
 
+import '../widgets/toast.dart';
+
 ValueNotifier<CategoryType> selectedCategoryType =
     ValueNotifier(CategoryType.income);
 
@@ -168,7 +170,7 @@ class _ScreenCategoryState extends State<ScreenCategory>
                     style: ElevatedButton.styleFrom(
                         backgroundColor:
                             const Color.fromARGB(255, 206, 164, 52)),
-                    onPressed: () {
+                    onPressed: () async{
                       final categoryName = categoryNameController.text;
                       if (categoryName.isEmpty) {
                         return;
@@ -179,7 +181,8 @@ class _ScreenCategoryState extends State<ScreenCategory>
                         name: categoryName,
                         type: type,
                       );
-                      CategoryDB.instance.insertCategory(category);
+                      await CategoryDB.instance.insertCategory(category);
+                      showToast(message: 'Added');
                       Navigator.of(context).pop();
                     },
                     child: const Text(

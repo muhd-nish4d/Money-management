@@ -8,11 +8,11 @@ class WidgetAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Color.fromARGB(255, 57, 62, 70),
-      iconTheme: IconThemeData(color: greyWhite),
+      backgroundColor: const Color.fromARGB(255, 57, 62, 70),
+      iconTheme: const IconThemeData(color: greyWhite),
       title: Text(
         title,
-        style: TextStyle(color: greyWhite, fontWeight: FontWeight.bold),
+        style: const TextStyle(color: greyWhite, fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
     );

@@ -25,6 +25,9 @@ class _ScreenCircleChartState extends State<ScreenCircleChart> {
       body: pages[currentSelectedIndex],
       backgroundColor: const Color.fromARGB(255, 18, 41, 72),
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.amber),
+        title: const Text('Observe',style: TextStyle(color: Colors.amber),),
+        centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 14, 31, 51),
       ),
       bottomNavigationBar: BottomNavigationBar(

@@ -15,7 +15,7 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
     double bottomSheetOffset,
   ) {
     return Material(
-      color: Color.fromARGB(255, 14, 31, 51),
+      color: const Color.fromARGB(255, 14, 31, 51),
       child: SizedBox(
         child: ListView(
           controller: scrollController,
@@ -41,6 +41,7 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
                         TransactionDB.instance.deleteTransactions(transactionObj.id.toString());
                         Navigator.of(context).pop();
                         showToast(message: 'Deleted');
+                        // TransactionDB.instance.transactionListNotifier.notifyListeners();
                       },
                       icon: const Icon(
                         Icons.delete_rounded,

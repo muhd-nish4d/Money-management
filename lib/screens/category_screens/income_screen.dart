@@ -23,7 +23,7 @@ class ScreenIncome extends StatelessWidget {
               final income = incomeList[index];
               return SizedBox(
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 206, 164, 52),
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 206, 164, 52),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
                   ),
                   onPressed: (){},

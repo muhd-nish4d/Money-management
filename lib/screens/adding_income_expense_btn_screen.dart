@@ -143,6 +143,8 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                             child: ButtonTheme(
                               alignedDropdown: true,
                               child: DropdownButton<String>(
+                                iconEnabledColor: const Color.fromARGB(255, 206, 164, 52),
+                                iconDisabledColor: Colors.grey,
                                   value: categoryID,
                                   borderRadius: BorderRadius.circular(15),
                                   dropdownColor:
@@ -214,6 +216,7 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                       height: 70,
                       width: MediaQuery.of(context).size.width,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: amountController,
                         style: const TextStyle(
                             color: Color.fromARGB(255, 206, 164, 52)),
@@ -352,12 +355,12 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Color.fromARGB(255, 14, 31, 51),
+          backgroundColor: const Color.fromARGB(255, 14, 31, 51),
           onPressed: () {
             selectedDateTime ??= DateTime.now();
             addingTransactions();
           },
-          child: Icon(
+          child: const Icon(
             Icons.add,
             color: Color.fromARGB(255, 206, 164, 52),
           )),
@@ -395,6 +398,7 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
     showToast(message: 'Saved');
     Navigator.of(context).pop();
     TransactionDB.instance.refreshTransUI();
+    // TransactionDB.instance.transactionListNotifier.notifyListeners();
   }
 }
 
