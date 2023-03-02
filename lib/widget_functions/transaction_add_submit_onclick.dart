@@ -1,6 +1,0 @@
-//categoryName
-//Amount
-//Date
-//Note
-
-

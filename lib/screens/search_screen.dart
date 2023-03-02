@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
+import 'package:tracker/problems/amount_totals.dart';
 import 'package:tracker/screens/edit_screen.dart';
 import 'package:tracker/widgets/toast.dart';
 import '../widgets/search_screen_cards.dart';
@@ -118,9 +119,10 @@ class ScreenSearch extends SearchDelegate {
                 startActionPane:
                     ActionPane(motion: const StretchMotion(), children: [
                   SlidableAction(
-                    onPressed: (ctx) {
-                      TransactionDB.instance
+                    onPressed: (ctx) async{
+                      await TransactionDB.instance
                           .deleteTransactions(value.id.toString());
+                      Amounts().totalAmount();
                     },
                     borderRadius: BorderRadius.circular(15),
                     foregroundColor: Colors.red,

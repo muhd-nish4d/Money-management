@@ -1,7 +1,9 @@
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
+import 'package:tracker/problems/amount_totals.dart';
 import 'package:tracker/screens/edit_screen.dart';
+import 'package:tracker/widgets/delete_popup.dart';
 import 'package:tracker/widgets/toast.dart';
 
 import '../db_functions/transactions/transaction_db_functions.dart';
@@ -30,6 +32,7 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (ctx) =>
                                 ScreenEdit(transobj: transactionObj)));
+                        // Amounts.instance.totalAmount();
                       },
                       icon: const Icon(
                         Icons.edit,
@@ -37,10 +40,11 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
                       ),
                     ),
                     IconButton(
-                      onPressed: () {
-                        TransactionDB.instance.deleteTransactions(transactionObj.id.toString());
-                        Navigator.of(context).pop();
-                        showToast(message: 'Deleted');
+                      onPressed: () async {
+                        Navigator.of(ctx).pop();
+                        alertMassege(context,id: transactionObj.id.toString());
+                       
+                        
                         // TransactionDB.instance.transactionListNotifier.notifyListeners();
                       },
                       icon: const Icon(

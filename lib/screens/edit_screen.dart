@@ -3,6 +3,7 @@ import 'package:tracker/db_functions/category/category_db_functions.dart';
 import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
+import 'package:tracker/problems/amount_totals.dart';
 
 import '../widgets/toast.dart';
 
@@ -359,7 +360,9 @@ class _ScreenEditState extends State<ScreenEdit> {
     );
     await TransactionDB.instance.editTransactionDb(transEditModel);
     showToast(message: 'Edited');
-    Navigator.of(context).pop();
     TransactionDB.instance.refreshTransUI();
+    await Amounts.instance.totalAmount();
+    Amounts.instance.totalAmount();
+    Navigator.of(context).pop();
   }
 }

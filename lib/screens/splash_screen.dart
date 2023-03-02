@@ -6,6 +6,7 @@ import 'package:tracker/db_functions/category/category_db_functions.dart';
 import 'package:tracker/screens/home_screen.dart';
 
 import '../db_functions/transactions/transaction_db_functions.dart';
+import '../problems/amount_totals.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
@@ -26,6 +27,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
   Widget build(BuildContext context) {
     CategoryDB.instance.refreshUI();
     TransactionDB.instance.refreshTransUI();
+    // Amounts.instance.totalAmount();
     // return Scaffold(
     //   body: Center(
     //     child: Text('data',style: TextStyle(color: Colors.amber),),

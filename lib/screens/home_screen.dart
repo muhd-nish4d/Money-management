@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
+import 'package:tracker/problems/amount_totals.dart';
 import 'package:tracker/screens/adding_income_expense_btn_screen.dart';
 import 'package:tracker/screens/category_main_screen.dart';
-import 'package:tracker/screens/chart_screens/circle_chart.dart';
 import 'package:tracker/screens/search_screen.dart';
 import 'package:tracker/widgets/home_transactions.dart';
 
@@ -16,6 +16,7 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Amounts.instance.totalAmount();
     // TransactionDB.instance.refreshTransUI();
     return Scaffold(
       //rgb(247, 247, 247)
@@ -52,22 +53,27 @@ class ScreenHome extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Column(
-                            children:const [
-                               Text(
+                            children: [
+                              const Text(
                                 'Total',
                                 style: TextStyle(
                                     color: greyd,
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold),
                               ),
-                               Text(
-                                '₹9999.0',
-                                style: TextStyle(
-                                    // rgb(242, 231, 213)
-                                    color: greyd,
-                                    fontSize: 40,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.bold),
+                              ValueListenableBuilder(
+                                valueListenable: Amounts.instance.totalResult,
+                                builder: (context, value, child) {
+                                  return Text(
+                                    '₹$value',
+                                    style: const TextStyle(
+                                        // rgb(242, 231, 213)
+                                        color: greyd,
+                                        fontSize: 40,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.bold),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -78,10 +84,10 @@ class ScreenHome extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Row(
-                                    children:const [
-                                       Icon(Icons.arrow_upward_rounded,
+                                    children: const [
+                                      Icon(Icons.arrow_upward_rounded,
                                           color: greyd),
-                                       Text(
+                                      Text(
                                         'Income',
                                         style: TextStyle(
                                             color: greyd,
@@ -90,13 +96,19 @@ class ScreenHome extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  const Text(
-                                    '₹999.0',
-                                    style: TextStyle(
-                                        color: greyd,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter'),
+                                  ValueListenableBuilder(
+                                    valueListenable:
+                                        Amounts.instance.incomeResult,
+                                    builder: (context, value, child) {
+                                      return Text(
+                                        '₹$value',
+                                        style: const TextStyle(
+                                            color: greyd,
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Inter'),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
@@ -104,10 +116,10 @@ class ScreenHome extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Row(
-                                    children:const [
-                                       Icon(Icons.arrow_downward_rounded,
+                                    children: const [
+                                      Icon(Icons.arrow_downward_rounded,
                                           color: greyd),
-                                       Text(
+                                      Text(
                                         'Expense',
                                         style: TextStyle(
                                             color: greyd,
@@ -116,13 +128,19 @@ class ScreenHome extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  const Text(
-                                    '₹999.0',
-                                    style: TextStyle(
-                                        color: greyd,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter'),
+                                  ValueListenableBuilder(
+                                    valueListenable:
+                                        Amounts.instance.expenseResult,
+                                    builder: (context, value, child) {
+                                      return Text(
+                                        '₹$value',
+                                        style:const TextStyle(
+                                            color: greyd,
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Inter'),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
@@ -134,20 +152,21 @@ class ScreenHome extends StatelessWidget {
                                       backgroundColor: const Color.fromARGB(
                                           255, 255, 255, 232)),
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (ctx) =>
-                                                const ScreenCircleChart()));
+                                    // Navigator.of(context).push(
+                                    //     MaterialPageRoute(
+                                    //         builder: (ctx) =>
+                                    //             const ScreenCircleChart()));
+                                    Amounts().totalAmount();
                                   },
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.symmetric(vertical: 9),
                                     child: Column(
-                                      children:const [
-                                         Icon(Icons.analytics_rounded,
+                                      children: const [
+                                        Icon(Icons.analytics_rounded,
                                             color: greyd),
-                                         SizedBox(),
-                                         Text(
+                                        SizedBox(),
+                                        Text(
                                           'Observe',
                                           style: TextStyle(
                                             color: greyd,
@@ -253,40 +272,52 @@ class ScreenHome extends StatelessWidget {
                                   valueListenable: TransactionDB
                                       .instance.transactionListNotifier,
                                   builder: (context, value, child) {
-                                    return 
-                                     TransactionDB
-                                      .instance.transactionListNotifier.value.isEmpty?
-                                      IconButton(onPressed: (){
-                                        Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const ScreenAddTransBtn()));
-                                      }, icon: const Icon(Icons.add,size: 50,)):
-                                    GridView.builder(
-                                      // primary: true,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 1.1,
-                                        crossAxisSpacing: 40,
-                                        mainAxisSpacing: 20,
-                                      ),
+                                    return TransactionDB
+                                            .instance
+                                            .transactionListNotifier
+                                            .value
+                                            .isEmpty
+                                        ? IconButton(
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (ctx) =>
+                                                          const ScreenAddTransBtn()));
+                                            },
+                                            icon: const Icon(
+                                              Icons.add,
+                                              size: 50,
+                                            ))
+                                        : GridView.builder(
+                                            // primary: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            gridDelegate:
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              childAspectRatio: 1.1,
+                                              crossAxisSpacing: 40,
+                                              mainAxisSpacing: 20,
+                                            ),
 
-                                      itemBuilder: (context, index) {
-                                        final newValue = value[index];
-                                        final transObj = TransactionModel(
-                                          id: newValue.id,
-                                          amount: newValue.amount,
-                                          date: newValue.date,
-                                          note: newValue.note,
-                                          type: newValue.type,
-                                          category: newValue.category,
-                                        );
-                                        return WidgetHomeTransactions(
-                                          transObj: transObj,
-                                        );
-                                      },
-                                      itemCount:
-                                          value.length <= 3 ? value.length : 4,
-                                    );
+                                            itemBuilder: (context, index) {
+                                              final newValue = value[index];
+                                              final transObj = TransactionModel(
+                                                id: newValue.id,
+                                                amount: newValue.amount,
+                                                date: newValue.date,
+                                                note: newValue.note,
+                                                type: newValue.type,
+                                                category: newValue.category,
+                                              );
+                                              return WidgetHomeTransactions(
+                                                transObj: transObj,
+                                              );
+                                            },
+                                            itemCount: value.length <= 3
+                                                ? value.length
+                                                : 4,
+                                          );
                                   },
                                 ),
                               ),
@@ -337,6 +368,7 @@ class ScreenHome extends StatelessWidget {
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold))),
                       ),
+                      
                     ],
                   )
                 ],

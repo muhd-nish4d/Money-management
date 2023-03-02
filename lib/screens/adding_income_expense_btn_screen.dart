@@ -5,6 +5,7 @@ import 'package:tracker/models/transactions/transactions_model.dart';
 import 'package:tracker/widgets/toast.dart';
 
 import '../models/category/category_model.dart';
+import '../problems/amount_totals.dart';
 import '../widgets/for_add_transactions.dart';
 
 class ScreenAddTransBtn extends StatefulWidget {
@@ -107,14 +108,14 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                   //   height: 200,
                   //   width: 200,
                   //   child: DropdownButton(
-
+    
                   //     hint: Text('Select Category'),
                   //     items: [
                   //     DropdownMenuItem(child: Text('data'),value: 1,),
                   //     DropdownMenuItem(child: Text('nishad'),value: 2,),
                   //     DropdownMenuItem(child: Text('muhaim'),value: 3,),
                   //     DropdownMenuItem(child: Text('fahim'),value: 4,),
-
+    
                   //   ], onChanged: (newValue){}),
                   // )
                   const SizedBox(
@@ -138,7 +139,7 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                                 width: 2,
                                 color: Color.fromARGB(255, 206, 164, 52),
                               )),
-
+    
                           child: DropdownButtonHideUnderline(
                             child: ButtonTheme(
                               alignedDropdown: true,
@@ -357,6 +358,7 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
       floatingActionButton: FloatingActionButton(
           backgroundColor: const Color.fromARGB(255, 14, 31, 51),
           onPressed: () {
+            FocusManager.instance.primaryFocus?.unfocus();
             selectedDateTime ??= DateTime.now();
             addingTransactions();
           },
@@ -395,9 +397,12 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
       category: selectedCategoryModel!,
     );
     await TransactionDB.instance.transactionAdd(transModel);
+    
     showToast(message: 'Saved');
-    Navigator.of(context).pop();
     TransactionDB.instance.refreshTransUI();
+    await Amounts.instance.totalAmount();
+    Amounts.instance.totalAmount();
+    Navigator.of(context).pop();
     // TransactionDB.instance.transactionListNotifier.notifyListeners();
   }
 }
