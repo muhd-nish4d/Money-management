@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
+import 'package:tracker/models/category/category_model.dart';
+import 'package:tracker/screens/chart_screens/full_chart.dart';
 
 class ScreenIncomeChart extends StatefulWidget {
   const ScreenIncomeChart({super.key});
@@ -9,37 +12,51 @@ class ScreenIncomeChart extends StatefulWidget {
 }
 
 class _ScreenIncomeChartState extends State<ScreenIncomeChart> {
-  Map<String, double> incomeData = {
-    "Salary": 5,
-    "School": 3,
-    "Bike": 5,
-    "Car": 3,
-    "Bag": 5,
-    "Lap": 3,
-  };
+  // Map<String, double>? incomeVata;
+  Map<String, double> incomeChartDatas = {'': 0};
 
+  // TransactionDB.instance.transactionListNotifier.value.map((e) {
+  //     return Map<String, double> newMap = {
+
+  //     };
+  //   });
+
+  void incomeSetup() {
+    incomeChartDatas.clear();
+    for (var item in TransactionDB.instance.transactionListNotifier.value
+        .where((element) => element.type == CategoryType.income)) {
+      Map<String, double> datas = {item.category.name: item.amount};
+      incomeChartDatas.addAll(datas);
+      // incomeVata = shahid;
+    }
+  }
+
+  // ValueNotifier<List<TransactionModel>> incomeNotifier =
+  //     ValueNotifier(TransactionDB.instance.transactionListNotifier.value);
+
+  // Map<String, double> incomeChart = {incomeNotifier.};
   @override
   Widget build(BuildContext context) {
-    return PieChart(
-      colorList: const [
-        Color.fromARGB(255, 206, 164, 52),
-        Color.fromARGB(255, 175, 141, 46),
-        Color.fromARGB(255, 170, 149, 91),
-        Color.fromARGB(255, 95, 90, 76),
-        Color.fromARGB(255, 224, 208, 164),
-        Color.fromARGB(255, 116, 114, 111),
-        Color.fromARGB(255, 107, 80, 4),
-        Color.fromARGB(255, 255, 195, 29),
-      ],
-      // centerTextStyle: TextStyle(color: Colors.white),
-      // animationDuration: Duration(seconds: 1),
-      dataMap: incomeData,
-      chartValuesOptions: const ChartValuesOptions(
-        showChartValueBackground: false,
-        showChartValuesInPercentage: true,
-        chartValueStyle: TextStyle(
-            fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
-      ),
-    );
+    incomeSetup();
+    return
+
+        // var nishadk = value.where((element) => element.type == CategoryType.income).toList();
+
+        incomeChartDatas.isEmpty
+            ? const Text('No Data')
+            : PieChart(
+                // centerTextStyle: TextStyle(color: Colors.white),
+                // animationDuration: Duration(seconds: 1),
+
+                dataMap: incomeChartDatas,
+                chartValuesOptions: const ChartValuesOptions(
+                  showChartValueBackground: false,
+                  showChartValuesInPercentage: true,
+                  chartValueStyle: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+              );
   }
 }

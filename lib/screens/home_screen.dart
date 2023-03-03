@@ -10,6 +10,7 @@ import 'package:tracker/widgets/home_transactions.dart';
 import '../color/color.dart';
 import '../widgets/appBar/appbar.dart';
 import '../widgets/drawer_widget.dart';
+import 'chart_screens/circle_chart.dart';
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
@@ -152,10 +153,10 @@ class ScreenHome extends StatelessWidget {
                                       backgroundColor: const Color.fromARGB(
                                           255, 255, 255, 232)),
                                   onPressed: () {
-                                    // Navigator.of(context).push(
-                                    //     MaterialPageRoute(
-                                    //         builder: (ctx) =>
-                                    //             const ScreenCircleChart()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (ctx) =>
+                                                const ScreenCircleChart()));
                                     Amounts().totalAmount();
                                   },
                                   child: Padding(
