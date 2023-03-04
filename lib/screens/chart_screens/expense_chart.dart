@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:tracker/models/category/category_model.dart';
-import 'package:tracker/screens/chart_screens/full_chart.dart';
 
 class ScreenExpenseChart extends StatefulWidget {
   const ScreenExpenseChart({super.key});

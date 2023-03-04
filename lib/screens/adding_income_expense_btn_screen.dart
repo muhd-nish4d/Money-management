@@ -16,7 +16,7 @@ class ScreenAddTransBtn extends StatefulWidget {
 }
 
 class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
-  DateTime? selectedDateTime;
+  DateTime? selectedDateTime = DateTime.now();
   CategoryType? selectedCategoryType = CategoryType.income;
   CategoryModel? selectedCategoryModel;
   final amountController = TextEditingController();
@@ -108,14 +108,14 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                   //   height: 200,
                   //   width: 200,
                   //   child: DropdownButton(
-    
+
                   //     hint: Text('Select Category'),
                   //     items: [
                   //     DropdownMenuItem(child: Text('data'),value: 1,),
                   //     DropdownMenuItem(child: Text('nishad'),value: 2,),
                   //     DropdownMenuItem(child: Text('muhaim'),value: 3,),
                   //     DropdownMenuItem(child: Text('fahim'),value: 4,),
-    
+
                   //   ], onChanged: (newValue){}),
                   // )
                   const SizedBox(
@@ -139,13 +139,14 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                                 width: 2,
                                 color: Color.fromARGB(255, 206, 164, 52),
                               )),
-    
+
                           child: DropdownButtonHideUnderline(
                             child: ButtonTheme(
                               alignedDropdown: true,
                               child: DropdownButton<String>(
-                                iconEnabledColor: const Color.fromARGB(255, 206, 164, 52),
-                                iconDisabledColor: Colors.grey,
+                                  iconEnabledColor:
+                                      const Color.fromARGB(255, 206, 164, 52),
+                                  iconDisabledColor: Colors.grey,
                                   value: categoryID,
                                   borderRadius: BorderRadius.circular(15),
                                   dropdownColor:
@@ -283,13 +284,7 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                         color: Color.fromARGB(255, 206, 164, 52),
                       ),
                       label: Text(
-                        selectedDateTime == null
-                            ? DateTime.now()
-                                .toString()
-                                .replaceRange(10, null, '')
-                            : selectedDateTime
-                                .toString()
-                                .replaceRange(10, null, ''),
+                        selectedDateTime.toString().replaceRange(10, null, ''),
                         style: const TextStyle(
                             color: Color.fromARGB(255, 206, 164, 52)),
                       ),
@@ -372,7 +367,10 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
   Future<void> addingTransactions() async {
     final amountText = amountController.text;
     final noteText = noteController.text;
-    if (amountText.isEmpty || noteText.isEmpty || selectedCategoryModel == null || selectedDateTime == null) {
+    if (amountText.isEmpty ||
+        noteText.isEmpty ||
+        selectedCategoryModel == null ||
+        selectedDateTime == null) {
       return showSnackBarr(context);
     }
     // if (noteText.isEmpty) {
@@ -397,7 +395,7 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
       category: selectedCategoryModel!,
     );
     await TransactionDB.instance.transactionAdd(transModel);
-    
+
     showToast(message: 'Saved');
     TransactionDB.instance.refreshTransUI();
     await Amounts.instance.totalAmount();

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
+import 'package:tracker/problems/amount_totals.dart';
 
 const transactionDBName = 'transactionsDB';
 abstract class TransacrionDBFunctions {
@@ -18,6 +19,8 @@ class TransactionDB implements TransacrionDBFunctions {
   }
 
   ValueNotifier<List<TransactionModel>> transactionListNotifier = ValueNotifier([]);
+  ValueNotifier<List<TransactionModel>> transactionFilterNotifier = ValueNotifier([]);
+
 
   @override
   Future<void> transactionAdd(TransactionModel obj) async {
@@ -36,8 +39,12 @@ class TransactionDB implements TransacrionDBFunctions {
     final transList = await getTransactions();
     transList.sort((first, second) => second.date.compareTo(first.date));
     transactionListNotifier.value.clear();
+    transactionFilterNotifier.value.clear();
     transactionListNotifier.value.addAll(transList);
+    transactionFilterNotifier.value.addAll(transList);
+    Amounts.instance. totalAmount();
     transactionListNotifier.notifyListeners();
+    transactionFilterNotifier.notifyListeners();
   }
   
   @override

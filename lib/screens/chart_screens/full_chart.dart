@@ -30,7 +30,7 @@ class _ScreenFullChartState extends State<ScreenFullChart> {
           'Income': Amounts.instance.incomeResult.value,
           'Expense': Amounts.instance.expenseResult.value,
         };
-        return PieChart(dataMap: totalmappp);
+        return PieChart(dataMap: totalmappp,);
       },
     );
 

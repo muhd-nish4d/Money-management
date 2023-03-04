@@ -10,6 +10,7 @@ import 'package:tracker/widgets/home_transactions.dart';
 import '../color/color.dart';
 import '../widgets/appBar/appbar.dart';
 import '../widgets/drawer_widget.dart';
+import '../widgets/transactions/recent_transations.dart';
 import 'chart_screens/circle_chart.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -17,7 +18,12 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Amounts.instance.totalAmount();
+     Amounts.instance.totalAmount();
+    
+     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+     TransactionDB.instance.refreshTransUI();
+    });
+    // Amounts.instance.totalAmount();
     // TransactionDB.instance.refreshTransUI();
     return Scaffold(
       //rgb(247, 247, 247)
@@ -265,63 +271,7 @@ class ScreenHome extends StatelessWidget {
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 20, right: 20),
-                              child: SizedBox(
-                                width: double.infinity,
-                                height:
-                                    MediaQuery.of(context).size.height * .37,
-                                child: ValueListenableBuilder(
-                                  valueListenable: TransactionDB
-                                      .instance.transactionListNotifier,
-                                  builder: (context, value, child) {
-                                    return TransactionDB
-                                            .instance
-                                            .transactionListNotifier
-                                            .value
-                                            .isEmpty
-                                        ? IconButton(
-                                            onPressed: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (ctx) =>
-                                                          const ScreenAddTransBtn()));
-                                            },
-                                            icon: const Icon(
-                                              Icons.add,
-                                              size: 50,
-                                            ))
-                                        : GridView.builder(
-                                            // primary: true,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            gridDelegate:
-                                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: 1.1,
-                                              crossAxisSpacing: 40,
-                                              mainAxisSpacing: 20,
-                                            ),
-
-                                            itemBuilder: (context, index) {
-                                              final newValue = value[index];
-                                              final transObj = TransactionModel(
-                                                id: newValue.id,
-                                                amount: newValue.amount,
-                                                date: newValue.date,
-                                                note: newValue.note,
-                                                type: newValue.type,
-                                                category: newValue.category,
-                                              );
-                                              return WidgetHomeTransactions(
-                                                transObj: transObj,
-                                              );
-                                            },
-                                            itemCount: value.length <= 3
-                                                ? value.length
-                                                : 4,
-                                          );
-                                  },
-                                ),
-                              ),
+                              child: WidgetRecentTransactions()
                             ),
                           ],
                         ),
