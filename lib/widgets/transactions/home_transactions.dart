@@ -3,7 +3,7 @@ import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
 import 'package:tracker/widgets/home_transaction_bottum_sheet.dart';
 
-import '../color/color.dart';
+import '../../color/color.dart';
 
 class WidgetHomeTransactions extends StatelessWidget {
   final TransactionModel transObj;
@@ -31,7 +31,7 @@ class WidgetHomeTransactions extends StatelessWidget {
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 79, 78, 78),
+            backgroundColor: backBlack,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15))),
         onPressed: () {

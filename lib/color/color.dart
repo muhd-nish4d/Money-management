@@ -12,6 +12,15 @@ const Color darkRed = Color.fromARGB(255, 194, 16, 16);
 
 const Color greyd = Color.fromARGB(255, 57, 62, 70);
 
+const Color gradBlue = Color.fromARGB(255, 1, 114, 175);
+const Color gradGreen = Color.fromARGB(255, 116, 254, 189);
+const Color backBlack = Color.fromARGB(255, 37, 37, 37);
+const LinearGradient blueGreenGrad = LinearGradient(
+    colors: [gradBlue, gradGreen],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight);
+
+
 //rose = rgb(255, 212, 212)
 //white = rgb(255, 255, 232)
 //green = rgb(205, 233, 144)

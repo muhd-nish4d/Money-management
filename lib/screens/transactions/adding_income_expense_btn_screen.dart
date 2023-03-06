@@ -4,9 +4,10 @@ import 'package:tracker/db_functions/transactions/transaction_db_functions.dart'
 import 'package:tracker/models/transactions/transactions_model.dart';
 import 'package:tracker/widgets/toast.dart';
 
-import '../models/category/category_model.dart';
-import '../problems/amount_totals.dart';
-import '../widgets/for_add_transactions.dart';
+// import '../../models/category/category_model.dart';
+import '../../models/category/category_model.dart';
+import '../../problems/amount_totals.dart';
+import '../../widgets/for_add_transactions.dart';
 
 class ScreenAddTransBtn extends StatefulWidget {
   const ScreenAddTransBtn({super.key});

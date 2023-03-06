@@ -8,29 +8,27 @@ import '../../models/transactions/transactions_model.dart';
 ValueNotifier<List<TransactionModel>> chartNotifier =
     ValueNotifier(TransactionDB.instance.transactionListNotifier.value);
 
-class ScreenFullChart extends StatefulWidget {
+class ScreenFullChart extends StatelessWidget {
   const ScreenFullChart({super.key});
-
-  @override
-  State<ScreenFullChart> createState() => _ScreenFullChartState();
-}
-
-class _ScreenFullChartState extends State<ScreenFullChart> {
-  Map<String, double> dataMap = {
-    "Income": 5,
-    "Expense": 3,
-  };
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: chartNotifier,
       builder: (context, value, child) {
+        var total = Amounts.instance.incomeResult.value+Amounts.instance.expenseResult.value;
         Map<String, double> totalmappp = {
           'Income': Amounts.instance.incomeResult.value,
           'Expense': Amounts.instance.expenseResult.value,
         };
-        return PieChart(dataMap: totalmappp,);
+        
+        return
+        total == 0?
+        Text('data'):
+        PieChart(
+          dataMap: totalmappp,
+
+        );
       },
     );
 

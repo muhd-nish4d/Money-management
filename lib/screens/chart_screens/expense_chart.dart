@@ -33,6 +33,7 @@ class _ScreenExpenseChartState extends State<ScreenExpenseChart> {
             // animationDuration: Duration(seconds: 1),
             dataMap: expenseChartData,
             chartValuesOptions: const ChartValuesOptions(
+              
               showChartValuesInPercentage: true,
               chartValueStyle: TextStyle(
                   fontSize: 15,

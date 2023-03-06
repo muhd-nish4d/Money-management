@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
 import '../../db_functions/transactions/transaction_db_functions.dart';
 import '../../models/transactions/transactions_model.dart';
-import '../../screens/adding_income_expense_btn_screen.dart';
-import '../home_transactions.dart';
+import '../../screens/transactions/adding_income_expense_btn_screen.dart';
+import 'home_transactions.dart';
 
 class WidgetRecentTransactions extends StatelessWidget {
   const WidgetRecentTransactions({super.key});

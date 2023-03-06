@@ -31,6 +31,7 @@ class _ScreenEditState extends State<ScreenEdit> {
     selectedDateinEdit = widget.transobj.date;
     selectedCategoryTypeinEdit = widget.transobj.type;
     selectedCategoryModelinEdit = widget.transobj.category;
+    categoryId = selectedCategoryModelinEdit!.id;
     super.initState();
   }
 
