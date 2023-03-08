@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tracker/consts/color.dart';
 
 class ScreenSettings extends StatelessWidget {
   const ScreenSettings({super.key});
@@ -6,7 +7,7 @@ class ScreenSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 18, 41, 72),
+      backgroundColor: backBlack,
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 14, 31, 51),
         title: const Text(
