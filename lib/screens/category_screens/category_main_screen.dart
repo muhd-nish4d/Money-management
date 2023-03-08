@@ -3,8 +3,10 @@ import 'package:tracker/db_functions/category/category_db_functions.dart';
 import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/screens/category_screens/expense_screen.dart';
 import 'package:tracker/screens/category_screens/income_screen.dart';
-
-import '../widgets/toast.dart';
+import '../../consts/color.dart';
+import '../../consts/container_shadow.dart';
+import '../../widgets/appBar/appbar.dart';
+import '../../consts/toast.dart';
 
 ValueNotifier<CategoryType> selectedCategoryType =
     ValueNotifier(CategoryType.income);
@@ -31,28 +33,22 @@ class _ScreenCategoryState extends State<ScreenCategory>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 18, 41, 72),
-      appBar: AppBar(
-        iconTheme:
-            const IconThemeData(color: Color.fromARGB(255, 206, 164, 52)),
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 14, 31, 51),
-        title: const Text(
-          'Category',
-          style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
-        ),
-      ),
+      backgroundColor: backBlack,
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(55),
+          //AppBar
+          child: WidgetAppBar(title: 'Category')),
       body: Column(
         children: [
           TabBar(
               // enableFeedback: false,
               // automaticIndicatorColorAdjustment: false,
-              
+
               indicatorColor: const Color.fromARGB(255, 206, 164, 52),
               labelStyle: const TextStyle(fontSize: 20),
               unselectedLabelStyle: const TextStyle(fontSize: 15),
-              labelColor: const Color.fromARGB(255, 206, 164, 52),
-              unselectedLabelColor: Colors.white,
+              labelColor: gradGreen,
+              unselectedLabelColor: gradBlue,
               controller: tabController,
               tabs: const [
                 Tab(
@@ -70,13 +66,13 @@ class _ScreenCategoryState extends State<ScreenCategory>
         ],
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color.fromARGB(255, 14, 31, 51),
+          backgroundColor: gradGreen,
           onPressed: () {
             showBottumSheetMain(context);
           },
           child: const Icon(
             Icons.add,
-            color: Color.fromARGB(255, 206, 164, 52),
+            color: gradBlue,
           )),
     );
   }
@@ -87,7 +83,7 @@ class _ScreenCategoryState extends State<ScreenCategory>
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15), topRight: Radius.circular(15))),
       context: ctx,
-      backgroundColor: const Color.fromARGB(255, 14, 31, 51),
+      backgroundColor: backBlack,
       builder: (context) {
         return SizedBox(
           width: double.infinity,
@@ -136,59 +132,64 @@ class _ScreenCategoryState extends State<ScreenCategory>
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                child: TextFormField(
-                  controller: categoryNameController,
-                  style:
-                      const TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
-                  decoration: InputDecoration(
-                    hintText: 'Type here',
-                    hintStyle: const TextStyle(
-                        color: Color.fromARGB(255, 114, 95, 41)),
-                    label: const Text(
-                      'Category',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 206, 164, 52), width: 2),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 206, 164, 52),
-                        width: 2.0,
-                      ),
-                    ),
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: blueGreenGrad,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [containerShadow()]),
+                  child: TextFormField(
+                    controller: categoryNameController,
+                    decoration: const InputDecoration(border: InputBorder.none),
+                    textAlign: TextAlign.center,
+                    // style:
+                    //     const TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+                    // decoration: InputDecoration(
+                    //   hintText: 'Type here',
+                    //   hintStyle: const TextStyle(
+                    //       color: Color.fromARGB(255, 114, 95, 41)),
+                    //   label: const Text(
+                    //     'Category',
+                    //     style:
+                    //         TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+                    //   ),
+                    //   focusedBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(15.0),
+                    //     borderSide: const BorderSide(
+                    //         color: Color.fromARGB(255, 206, 164, 52), width: 2),
+                    //   ),
+                    //   enabledBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(15.0),
+                    //     borderSide: const BorderSide(
+                    //       color: Color.fromARGB(255, 206, 164, 52),
+                    //       width: 2.0,
+                    //     ),
+                    //   ),
+                    // ),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 206, 164, 52)),
-                    onPressed: () async{
+                    style: ElevatedButton.styleFrom(backgroundColor: gradGreen),
+                    onPressed: () async {
                       final categoryName = categoryNameController.text;
-                      if (categoryName.isEmpty) {
+                      final categoryCap = categoryName.substring(0,1).toUpperCase()+categoryName.substring(1);
+                      if (categoryCap.isEmpty) {
                         return;
                       }
                       final type = selectedCategoryType.value;
                       final category = CategoryModel(
                         id: DateTime.now().microsecondsSinceEpoch.toString(),
-                        name: categoryName,
+                        name: categoryCap,
                         type: type,
                       );
                       await CategoryDB.instance.insertCategory(category);
                       showToast(message: 'Added');
                       Navigator.of(context).pop();
                     },
-                    child: const Text(
-                      'Done',
-                      style: TextStyle(color: Color.fromARGB(255, 14, 31, 51)),
-                    )),
+                    child:
+                        const Text('Done', style: TextStyle(color: backBlack))),
               )
             ],
           ),
@@ -212,7 +213,7 @@ class RadioButtonWidget extends StatelessWidget {
           builder: (context, newCategory, _) {
             return Radio<CategoryType>(
               fillColor: MaterialStateColor.resolveWith(
-                (states) => const Color.fromARGB(255, 206, 164, 52),
+                (states) => greyWhite,
               ),
               value: type,
               groupValue: newCategory,
@@ -228,8 +229,7 @@ class RadioButtonWidget extends StatelessWidget {
         ),
         Text(
           title,
-          style: const TextStyle(
-              color: Color.fromARGB(255, 206, 164, 52), fontSize: 18),
+          style: const TextStyle(color: greyWhite, fontSize: 18),
         )
       ],
     );

@@ -1,12 +1,12 @@
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:tracker/consts/color.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
-import 'package:tracker/problems/amount_totals.dart';
-import 'package:tracker/screens/edit_screen.dart';
-import 'package:tracker/widgets/delete_popup.dart';
-import 'package:tracker/widgets/toast.dart';
+import 'package:tracker/screens/transactions/edit_screen.dart';
+import 'package:tracker/consts/delete_popup.dart';
 
-import '../db_functions/transactions/transaction_db_functions.dart';
+import '../../consts/date_parse.dart';
+
 
 Future<void> showHomeBottumSheet(BuildContext ctx,
     {required TransactionModel transactionObj}) async {
@@ -17,7 +17,7 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
     double bottomSheetOffset,
   ) {
     return Material(
-      color: const Color.fromARGB(255, 14, 31, 51),
+      color: backBlack,
       child: SizedBox(
         child: ListView(
           controller: scrollController,
@@ -36,7 +36,7 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
                       },
                       icon: const Icon(
                         Icons.edit,
-                        color: Colors.white,
+                        color: gradBlue,
                       ),
                     ),
                     IconButton(
@@ -49,7 +49,7 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
                       },
                       icon: const Icon(
                         Icons.delete_rounded,
-                        color: Colors.white,
+                        color: gradGreen,
                       ),
                     ),
                   ],
@@ -60,11 +60,11 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
               leading: const Text(
                 'Category type  :',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 206, 164, 52), fontSize: 20),
+                    color: greyWhite, fontSize: 20),
               ),
-              title: Text(transactionObj.type.name,
+              title: Text(transactionObj.type.name.toUpperCase(),
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 206, 164, 52),
+                      color: greyWhite,
                       fontSize: 20,
                       fontWeight: FontWeight.bold)),
             ),
@@ -73,11 +73,11 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
               leading: const Text(
                 'Category          :',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 206, 164, 52), fontSize: 20),
+                    color: greyWhite, fontSize: 20),
               ),
               title: Text(transactionObj.category.name,
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 206, 164, 52),
+                      color: greyWhite,
                       fontSize: 20,
                       fontWeight: FontWeight.bold)),
             ),
@@ -86,11 +86,11 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
               leading: const Text(
                 'Amount            :',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 206, 164, 52), fontSize: 20),
+                    color: greyWhite, fontSize: 20),
               ),
-              title: Text(transactionObj.amount.toString(),
+              title: Text("₹ ${transactionObj.amount.toString()}",
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 206, 164, 52),
+                      color: greyWhite,
                       fontSize: 20,
                       fontWeight: FontWeight.bold)),
             ),
@@ -99,12 +99,13 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
               leading: const Text(
                 'Date                  :',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 206, 164, 52), fontSize: 20),
+                    color: greyWhite, fontSize: 20),
               ),
               title: Text(
-                  transactionObj.date.toString().replaceRange(10, null, ''),
+                parseDate(transactionObj.date),
+                  // transactionObj.date.toString().replaceRange(10, null, ''),
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 206, 164, 52),
+                      color: greyWhite,
                       fontSize: 20,
                       fontWeight: FontWeight.bold)),
             ),
@@ -113,11 +114,11 @@ Future<void> showHomeBottumSheet(BuildContext ctx,
               leading: const Text(
                 'Note                 :',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 206, 164, 52), fontSize: 20),
+                    color: greyWhite, fontSize: 20),
               ),
               title: Text(transactionObj.note,
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 206, 164, 52),
+                      color: greyWhite,
                       fontSize: 20,
                       fontWeight: FontWeight.bold)),
             )

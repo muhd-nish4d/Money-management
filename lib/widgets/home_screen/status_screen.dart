@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../color/color.dart';
+import '../../consts/color.dart';
 import '../../problems/amount_totals.dart';
 import '../../screens/chart_screens/circle_chart.dart';
 
@@ -15,7 +15,7 @@ class WidgetSatusScreen extends StatelessWidget {
       decoration: BoxDecoration(
           gradient: blueGreenGrad,
           borderRadius: BorderRadius.circular(15),
-          boxShadow:const [
+          boxShadow: const [
             BoxShadow(
               color: Color.fromARGB(255, 0, 0, 0),
               blurRadius: 15.0, // soften the shadow
@@ -41,7 +41,7 @@ class WidgetSatusScreen extends StatelessWidget {
                   elevation: 10,
                   color: backBlack,
                   child: Column(children: [
-                    value > 0
+                    value >= 0
                         ? const Text(
                             'Total',
                             style: TextStyle(
@@ -49,7 +49,7 @@ class WidgetSatusScreen extends StatelessWidget {
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold),
                           )
-                        :const Text(
+                        : const Text(
                             'Lose',
                             style: TextStyle(
                                 color: greyWhite,
@@ -62,14 +62,14 @@ class WidgetSatusScreen extends StatelessWidget {
                         '₹$value',
                         style: value < 0
                             ? const TextStyle(
-                              overflow: TextOverflow.fade,
+                                overflow: TextOverflow.fade,
                                 // rgb(242, 231, 213)
                                 color: greyWhite,
                                 fontSize: 40,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.bold)
-                            :  const TextStyle(
-                              overflow: TextOverflow.ellipsis,
+                            : const TextStyle(
+                                overflow: TextOverflow.ellipsis,
                                 // rgb(242, 231, 213)
                                 color: greyWhite,
                                 fontSize: 40,
@@ -89,12 +89,12 @@ class WidgetSatusScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
-                    children:const [
-                       Icon(
+                    children: const [
+                      Icon(
                         Icons.arrow_upward_rounded,
                         color: backBlack,
                       ),
-                       Text(
+                      Text(
                         'Income',
                         style: TextStyle(
                             color: backBlack,
@@ -103,18 +103,25 @@ class WidgetSatusScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  ValueListenableBuilder(
-                    valueListenable: Amounts.instance.incomeResult,
-                    builder: (context, value, child) {
-                      return Text(
-                        '₹$value',
-                        style: const TextStyle(
-                            color: backBlack,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Inter'),
-                      );
-                    },
+                  SizedBox(
+                    height: 35,
+                    width: 125,
+                    child: Center(
+                      child: ValueListenableBuilder(
+                        valueListenable: Amounts.instance.incomeResult,
+                        builder: (context, value, child) {
+                          return Text(
+                            '₹$value',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                color: backBlack,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Inter'),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -122,12 +129,12 @@ class WidgetSatusScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
-                    children:const [
-                       Icon(
+                    children: const [
+                      Icon(
                         Icons.arrow_downward_rounded,
                         color: backBlack,
                       ),
-                       Text(
+                      Text(
                         'Expense',
                         style: TextStyle(
                             color: backBlack,
@@ -136,27 +143,34 @@ class WidgetSatusScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  ValueListenableBuilder(
-                    valueListenable: Amounts.instance.expenseResult,
-                    builder: (context, value, child) {
-                      return Text(
-                        '₹$value',
-                        style: const TextStyle(
-                            color: backBlack,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Inter'),
-                      );
-                    },
+                  SizedBox(
+                    width: 125,
+                    height: 35,
+                    child: Center(
+                      child: ValueListenableBuilder(
+                        valueListenable: Amounts.instance.expenseResult,
+                        builder: (context, value, child) {
+                          return Text(
+                            '₹$value',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                color: backBlack,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Inter'),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ],
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    elevation: 10,
+                      elevation: 10,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25)),
-                      backgroundColor:backBlack),
+                      backgroundColor: backBlack),
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (ctx) => const ScreenCircleChart()));

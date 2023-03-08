@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../color/color.dart';
-import '../../screens/search_screen.dart';
+import '../../consts/color.dart';
+import '../../screens/search/search_screen.dart';
 import '../transactions/recent_transations.dart';
 
 class WidgetRecentScreen extends StatelessWidget {

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
-import '../../color/color.dart';
-import '../../screens/category_main_screen.dart';
+import '../../consts/color.dart';
+import '../../screens/category_screens/category_main_screen.dart';
 
 class WidgetCategoryAddBtn extends StatelessWidget {
   const WidgetCategoryAddBtn({super.key});

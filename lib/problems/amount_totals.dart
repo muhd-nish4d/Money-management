@@ -33,10 +33,5 @@ class Amounts {
     }
 
     totalResult.value = incomeResult.value - expenseResult.value;
-
-
-    print('income total ${incomeResult.value}');
-    print('expense total ${expenseResult.value}');
-    print('total ${totalResult.value}');
   }
 }

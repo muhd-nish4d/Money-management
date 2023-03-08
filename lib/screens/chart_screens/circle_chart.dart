@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tracker/consts/color.dart';
 import 'package:tracker/screens/chart_screens/expense_chart.dart';
 import 'package:tracker/screens/chart_screens/full_chart.dart';
 import 'package:tracker/screens/chart_screens/income_chart.dart';
+
+import '../../widgets/appBar/appbar.dart';
 
 class ScreenCircleChart extends StatefulWidget {
    const ScreenCircleChart({super.key});
@@ -23,17 +26,15 @@ class _ScreenCircleChartState extends State<ScreenCircleChart> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[currentSelectedIndex],
-      backgroundColor: const Color.fromARGB(255, 18, 41, 72),
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.amber),
-        title: const Text('Observe',style: TextStyle(color: Colors.amber),),
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 14, 31, 51),
-      ),
+      backgroundColor: backBlack,
+      appBar:PreferredSize(
+          preferredSize: const Size.fromHeight(55),
+          //AppBar
+          child: WidgetAppBar(title: 'Observe')),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 14, 31, 51),
-        selectedItemColor: const Color.fromARGB(255, 255, 231, 167),
-        unselectedItemColor: const Color.fromARGB(255, 206, 164, 52),
+        backgroundColor: gradBlue,
+        selectedItemColor: backBlack,
+        unselectedItemColor: gradGreen,
         currentIndex: currentSelectedIndex,
         onTap: (value) {
           setState(() {

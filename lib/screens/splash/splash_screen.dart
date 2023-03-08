@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
 
-import 'package:tracker/screens/home_screen.dart';
+import 'package:tracker/screens/home/home_screen.dart';
 
-import '../db_functions/transactions/transaction_db_functions.dart';
-import '../problems/amount_totals.dart';
+import '../../db_functions/transactions/transaction_db_functions.dart';
+
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});

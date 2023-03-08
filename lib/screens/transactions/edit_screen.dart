@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:tracker/consts/container_shadow.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
 import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
 import 'package:tracker/problems/amount_totals.dart';
 
-import '../widgets/toast.dart';
+import '../../consts/color.dart';
+import '../../consts/date_parse.dart';
+import '../../widgets/appBar/appbar.dart';
+import '../../consts/toast.dart';
 
 class ScreenEdit extends StatefulWidget {
   final TransactionModel transobj;
@@ -38,17 +42,11 @@ class _ScreenEditState extends State<ScreenEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 18, 41, 72),
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 14, 31, 51),
-        iconTheme:
-            const IconThemeData(color: Color.fromARGB(255, 206, 164, 52)),
-        title: const Text(
-          'Income / Expense',
-          style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
-        ),
-        centerTitle: true,
-      ),
+      backgroundColor: backBlack,
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(55),
+          //AppBar
+          child: WidgetAppBar(title: '')),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,12 +68,11 @@ class _ScreenEditState extends State<ScreenEdit> {
                       });
                     },
                     fillColor: MaterialStateColor.resolveWith(
-                      (states) => const Color.fromARGB(255, 206, 164, 52),
+                      (states) => greyWhite,
                     )),
                 const Text(
                   'Income',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 206, 164, 52), fontSize: 18),
+                  style: TextStyle(color: greyWhite, fontSize: 18),
                 ),
                 const SizedBox(
                   width: 50,
@@ -90,12 +87,11 @@ class _ScreenEditState extends State<ScreenEdit> {
                       });
                     },
                     fillColor: MaterialStateColor.resolveWith(
-                      (states) => const Color.fromARGB(255, 206, 164, 52),
+                      (states) => greyWhite,
                     )),
                 const Text(
                   'Expense',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 206, 164, 52), fontSize: 18),
+                  style: TextStyle(color: greyWhite, fontSize: 18),
                 ),
               ],
             ),
@@ -111,7 +107,7 @@ class _ScreenEditState extends State<ScreenEdit> {
                   const Text(
                     'Category',
                     style: TextStyle(
-                        color: Color.fromARGB(255, 206, 164, 52),
+                        color: greyWhite,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
@@ -122,36 +118,36 @@ class _ScreenEditState extends State<ScreenEdit> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * .93,
                     height: 70,
-                    child: Card(
-                      color: const Color.fromARGB(255, 18, 41, 72),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: blueGreenGrad,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [containerShadow()]),
+                      // color: const Color.fromARGB(255, 18, 41, 72),
                       // borderOnForeground: true,
                       // elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          //<-- SEE HERE
-                          side: const BorderSide(
-                            width: 2,
-                            color: Color.fromARGB(255, 206, 164, 52),
-                          )),
+                      // shape: RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.circular(15),
+                      //     //<-- SEE HERE
+                      //     side: const BorderSide(
+                      //       width: 2,
+                      //       color: Color.fromARGB(255, 206, 164, 52),
+                      //     )),
 
                       child: DropdownButtonHideUnderline(
                         child: ButtonTheme(
                           alignedDropdown: true,
                           child: DropdownButton(
                               iconDisabledColor: Colors.grey,
-                              iconEnabledColor:
-                                  const Color.fromARGB(255, 206, 164, 52),
+                              iconEnabledColor: backBlack,
                               value: categoryId,
                               borderRadius: BorderRadius.circular(15),
-                              dropdownColor:
-                                  const Color.fromARGB(255, 14, 31, 51),
+                              dropdownColor: greyWhite,
                               hint: const Text(
                                 'Select category',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 206, 164, 52)),
+                                style: TextStyle(color: backBlack),
                               ),
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 206, 164, 52)),
+                              style: const TextStyle(color: backBlack),
                               onChanged: (value) {
                                 setState(() {
                                   categoryId = value;
@@ -181,7 +177,7 @@ class _ScreenEditState extends State<ScreenEdit> {
                   const Text(
                     'Amount',
                     style: TextStyle(
-                        color: Color.fromARGB(255, 206, 164, 52),
+                        color: greyWhite,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
@@ -191,31 +187,44 @@ class _ScreenEditState extends State<ScreenEdit> {
                   SizedBox(
                       height: 70,
                       width: MediaQuery.of(context).size.width,
-                      child: TextFormField(
-                        controller: amountCantroller,
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 206, 164, 52)),
-                        decoration: InputDecoration(
-                          hintText: 'Type here',
-                          hintStyle: const TextStyle(
-                              color: Color.fromARGB(255, 114, 95, 41)),
-                          label: const Text(
-                            'Amount',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 206, 164, 52)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 206, 164, 52),
-                                width: 2),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 206, 164, 52),
-                              width: 2.0,
-                            ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            gradient: blueGreenGrad,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [containerShadow()]),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: TextFormField(
+                            decoration: const InputDecoration(border: InputBorder.none),
+                            controller: amountCantroller,
+                            style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
+                            textAlign: TextAlign.center,
+                        
+                            // style: const TextStyle(
+                            //     color: greyWhite),
+                            // decoration: InputDecoration(
+                            //   hintText: 'Type here',
+                            //   hintStyle: const TextStyle(
+                            //       color: Color.fromARGB(255, 114, 95, 41)),
+                            //   label: const Text(
+                            //     'Amount',
+                            //     style: TextStyle(
+                            //         color: Color.fromARGB(255, 206, 164, 52)),
+                            //   ),
+                            //   focusedBorder: OutlineInputBorder(
+                            //     borderRadius: BorderRadius.circular(15.0),
+                            //     borderSide: const BorderSide(
+                            //         color: Color.fromARGB(255, 206, 164, 52),
+                            //         width: 2),
+                            //   ),
+                            //   enabledBorder: OutlineInputBorder(
+                            //     borderRadius: BorderRadius.circular(15.0),
+                            //     borderSide: const BorderSide(
+                            //       color: Color.fromARGB(255, 206, 164, 52),
+                            //       width: 2.0,
+                            //     ),
+                            //   ),
+                            // ),
                           ),
                         ),
                       )),
@@ -225,14 +234,15 @@ class _ScreenEditState extends State<ScreenEdit> {
                   const Text(
                     'Date',
                     style: TextStyle(
-                        color: Color.fromARGB(255, 206, 164, 52),
+                        color: greyWhite,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  SizedBox(
+                  Container(
+                    decoration: BoxDecoration(gradient: blueGreenGrad,borderRadius: BorderRadius.circular(15),boxShadow: [containerShadow()]),
                     width: MediaQuery.of(context).size.width,
                     height: 60,
                     child: OutlinedButton.icon(
@@ -250,20 +260,21 @@ class _ScreenEditState extends State<ScreenEdit> {
                       },
                       icon: const Icon(
                         Icons.edit_calendar_rounded,
-                        color: Color.fromARGB(255, 206, 164, 52),
+                        color: backBlack,
                       ),
                       label: Text(
-                        selectedDateinEdit
-                            .toString()
-                            .replaceRange(10, null, ''),
-                        style:
-                            const TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+                        parseDate(selectedDateinEdit!),
+                        // selectedDateinEdit
+                        //     .toString()
+                        //     .replaceRange(10, null, ''),
+                        style: const TextStyle(
+                            color: backBlack,fontWeight: FontWeight.bold),
                       ),
                       style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15)),
                           side: const BorderSide(
-                            color: Color.fromARGB(255, 206, 164, 52),
+                            color: backBlack,
                             width: 2,
                           )),
                     ),
@@ -275,62 +286,95 @@ class _ScreenEditState extends State<ScreenEdit> {
                   const Text(
                     'Note',
                     style: TextStyle(
-                        color: Color.fromARGB(255, 206, 164, 52),
+                        color: greyWhite,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  SizedBox(
-                      height: 300,
+                  Container(
+                    decoration: BoxDecoration(gradient: blueGreenGrad,borderRadius: BorderRadius.circular(15),boxShadow: [containerShadow()]),
+                      height: 200,
                       width: MediaQuery.of(context).size.width,
-                      child: TextFormField(
-                        minLines: 7,
-                        maxLines: 10,
-                        controller: notesController,
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 206, 164, 52)),
-                        decoration: InputDecoration(
-                          hintText: 'Type here',
-                          hintStyle: const TextStyle(
-                              color: Color.fromARGB(255, 114, 95, 41)),
-                          label: const Text(
-                            'Note',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 206, 164, 52)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 206, 164, 52),
-                                width: 2),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            // gapPadding: 40,
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 206, 164, 52),
-                              width: 2.0,
-                            ),
-                          ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: TextFormField(
+                          minLines: 7,
+                          maxLines: 10,
+                          controller: notesController,
+                          decoration: const InputDecoration(border: InputBorder.none),
+                          style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 17),
+                          // style: const TextStyle(
+                          //     color: Color.fromARGB(255, 206, 164, 52)),
+                          // decoration: InputDecoration(
+                          //   hintText: 'Type here',
+                          //   hintStyle: const TextStyle(
+                          //       color: Color.fromARGB(255, 114, 95, 41)),
+                          //   label: const Text(
+                          //     'Note',
+                          //     style: TextStyle(
+                          //         color: Color.fromARGB(255, 206, 164, 52)),
+                          //   ),
+                          //   focusedBorder: OutlineInputBorder(
+                          //     borderRadius: BorderRadius.circular(15.0),
+                          //     borderSide: const BorderSide(
+                          //         color: Color.fromARGB(255, 206, 164, 52),
+                          //         width: 2),
+                          //   ),
+                          //   enabledBorder: OutlineInputBorder(
+                          //     // gapPadding: 40,
+                          //     borderRadius: BorderRadius.circular(15.0),
+                          //     borderSide: const BorderSide(
+                          //       color: Color.fromARGB(255, 206, 164, 52),
+                          //       width: 2.0,
+                          //     ),
+                          //   ),
+                          // ),
                         ),
                       )),
                 ],
               ),
             ),
+            const SizedBox(height: 20,),
+            SizedBox(
+                    height: 70,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // FocusManager.instance.primaryFocus?.unfocus();
+                        // selectedDateTime ??= DateTime.now();
+                        // addingTransactions();
+                        editTransaction();
+                      },
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: backBlack),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        decoration: BoxDecoration(
+                          boxShadow: [containerShadow()],
+                          gradient: blueGreenGrad,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 23),
+                          child: Text(
+                            'Done',
+                            style: TextStyle(
+                              color: backBlack,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 14, 31, 51),
-          onPressed: () {
-            editTransaction();
-          },
-          child: const Icon(
-            Icons.thumb_up_alt,
-            color: Color.fromARGB(255, 206, 164, 52),
-          )),
+      
     );
   }
 

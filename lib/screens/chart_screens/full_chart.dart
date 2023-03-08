@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:tracker/problems/amount_totals.dart';
 
+import '../../consts/color.dart';
 import '../../db_functions/transactions/transaction_db_functions.dart';
 import '../../models/transactions/transactions_model.dart';
 
@@ -24,8 +25,9 @@ class ScreenFullChart extends StatelessWidget {
         
         return
         total == 0?
-        Text('data'):
+        const Center(child:  Text('No Data',style: TextStyle(color: greyWhite,fontWeight: FontWeight.bold,fontSize: 20),)):
         PieChart(
+          legendOptions: const LegendOptions(legendTextStyle: TextStyle(color: Colors.white)),
           dataMap: totalmappp,
 
         );

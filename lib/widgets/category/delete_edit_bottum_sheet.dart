@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import '../../consts/color.dart';
+import '../../consts/container_shadow.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
-import 'package:tracker/widgets/category_edit_bottom_sheet.dart';
-import 'package:tracker/widgets/toast.dart';
+import 'package:tracker/widgets/category/category_edit_bottom_sheet.dart';
+import 'package:tracker/consts/toast.dart';
 
 Future<void> deleteEditBottumSheet(BuildContext context,
     {required String categoryID, required String categeryName}) async {
   showModalBottomSheet(
-    backgroundColor: const Color.fromARGB(255, 14, 31, 51),
+    backgroundColor: backBlack,
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
       topLeft: Radius.circular(15),
@@ -24,9 +26,11 @@ Future<void> deleteEditBottumSheet(BuildContext context,
             Container(
               width: MediaQuery.of(context).size.width * .7,
               height: 60,
-              decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 206, 164, 52),
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              decoration:  BoxDecoration(
+                gradient: blueGreenGrad,
+                  color: const Color.fromARGB(255, 206, 164, 52),
+                  boxShadow: [containerShadow()],
+                  borderRadius: const BorderRadius.all(Radius.circular(15))),
               child: TextButton.icon(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -48,9 +52,11 @@ Future<void> deleteEditBottumSheet(BuildContext context,
             Container(
               width: MediaQuery.of(context).size.width * .7,
               height: 60,
-              decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 206, 164, 52),
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              decoration:  BoxDecoration(
+                  boxShadow: [containerShadow()],
+                gradient: blueGreenGrad,
+                  color: const Color.fromARGB(255, 206, 164, 52),
+                  borderRadius: const BorderRadius.all(Radius.circular(15))),
               child: TextButton.icon(
                   onPressed: () async {
                     await CategoryDB.instance.deleteCategory(categoryID);

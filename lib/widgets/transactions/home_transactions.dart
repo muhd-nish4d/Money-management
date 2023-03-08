@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
-import 'package:tracker/widgets/home_transaction_bottum_sheet.dart';
+import 'package:tracker/widgets/transactions/home_transaction_bottum_sheet.dart';
 
-import '../../color/color.dart';
+import '../../consts/color.dart';
+import '../../consts/date_parse.dart';
 
 class WidgetHomeTransactions extends StatelessWidget {
   final TransactionModel transObj;
@@ -49,7 +51,7 @@ class WidgetHomeTransactions extends StatelessWidget {
                   transObj.type == CategoryType.income
                       ? const Icon(
                           Icons.arrow_upward_rounded,
-                          color: darkGreeno,
+                          color: Colors.green,
                         )
                       : const Icon(
                           Icons.arrow_downward_rounded,
@@ -73,7 +75,7 @@ class WidgetHomeTransactions extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               height: 32,
-              child: Text(transObj.amount.toString(),
+              child: Text("₹${transObj.amount.toString()}",
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontSize: 27,
@@ -81,7 +83,7 @@ class WidgetHomeTransactions extends StatelessWidget {
                       color: greyWhite,
                       fontFamily: 'Inter')),
             ),
-            Text(transObj.date.toString().replaceRange(10, null, ''),
+            Text(parseDate(transObj.date),
                 overflow: TextOverflow.clip,
                 style: const TextStyle(
                     fontSize: 15,

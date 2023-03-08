@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tracker/widgets/toast.dart';
+import 'package:tracker/consts/container_shadow.dart';
+import 'package:tracker/consts/toast.dart';
 
-import '../db_functions/category/category_db_functions.dart';
-import '../models/category/category_model.dart';
-import '../screens/category_main_screen.dart';
+import '../../consts/color.dart';
+import '../../db_functions/category/category_db_functions.dart';
+import '../../models/category/category_model.dart';
+import '../../screens/category_screens/category_main_screen.dart';
 
 Future<void> showEditBottumSheet(BuildContext ctx,
     {required String? categoryName, required String idCategory}) async {
@@ -14,7 +16,7 @@ Future<void> showEditBottumSheet(BuildContext ctx,
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15), topRight: Radius.circular(15))),
     context: ctx,
-    backgroundColor: const Color.fromARGB(255, 14, 31, 51),
+    backgroundColor: backBlack,
     builder: (context) {
       return SizedBox(
         width: double.infinity,
@@ -61,30 +63,35 @@ Future<void> showEditBottumSheet(BuildContext ctx,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-              child: TextFormField(
-                controller: catogerynameEditingController,
-                style:
-                    const TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
-                decoration: InputDecoration(
-                  hintText: 'Type here',
-                  hintStyle:
-                      const TextStyle(color: Color.fromARGB(255, 114, 95, 41)),
-                  label: const Text(
-                    'Category',
-                    style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 206, 164, 52), width: 2),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: const BorderSide(
-                      color: Color.fromARGB(255, 206, 164, 52),
-                      width: 2.0,
-                    ),
-                  ),
+              child: Container(
+                decoration: BoxDecoration(gradient: blueGreenGrad,borderRadius: BorderRadius.circular(15),boxShadow: [containerShadow()]),
+                child: TextFormField(
+                  controller: catogerynameEditingController,
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(border: InputBorder.none),
+                  // style:
+                  //     const TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+                  // decoration: InputDecoration(
+                  //   hintText: 'Type here',
+                  //   hintStyle:
+                  //       const TextStyle(color: Color.fromARGB(255, 114, 95, 41)),
+                  //   label: const Text(
+                  //     'Category',
+                  //     style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+                  //   ),
+                  //   focusedBorder: OutlineInputBorder(
+                  //     borderRadius: BorderRadius.circular(15.0),
+                  //     borderSide: const BorderSide(
+                  //         color: Color.fromARGB(255, 206, 164, 52), width: 2),
+                  //   ),
+                  //   enabledBorder: OutlineInputBorder(
+                  //     borderRadius: BorderRadius.circular(15.0),
+                  //     borderSide: const BorderSide(
+                  //       color: Color.fromARGB(255, 206, 164, 52),
+                  //       width: 2.0,
+                  //     ),
+                  //   ),
+                  // ),
                 ),
               ),
             ),
@@ -92,16 +99,17 @@ Future<void> showEditBottumSheet(BuildContext ctx,
               padding: const EdgeInsets.all(15.0),
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 206, 164, 52)),
+                      backgroundColor: gradGreen),
                   onPressed: () async {
                     final categoryName = catogerynameEditingController.text;
-                    if (categoryName.isEmpty) {
+                    final categoryCap = categoryName.substring(0,1).toUpperCase()+categoryName.substring(1);
+                    if (categoryCap.isEmpty) {
                       return;
                     }
                     final type = selectedCategoryType.value;
                     final category = CategoryModel(
                       id: idCategory,
-                      name: categoryName,
+                      name: categoryCap,
                       type: type,
                     );
                     await CategoryDB.instance.editCategory(category);

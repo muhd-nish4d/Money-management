@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
 
-import '../models/category/category_model.dart';
+import '../../models/category/category_model.dart';
 ValueNotifier<CategoryType> selectedCategoryTypeinAdd =
     ValueNotifier(CategoryType.income);
 

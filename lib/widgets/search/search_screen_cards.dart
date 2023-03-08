@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tracker/color/color.dart';
+import 'package:tracker/consts/color.dart';
+import 'package:tracker/consts/container_shadow.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
-import 'package:tracker/widgets/home_transaction_bottum_sheet.dart';
+import 'package:tracker/widgets/transactions/home_transaction_bottum_sheet.dart';
+
+import '../../consts/date_parse.dart';
 
 class WidgetSearchCards extends StatelessWidget {
   final TransactionModel modelObj;
@@ -16,6 +19,7 @@ class WidgetSearchCards extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
+          boxShadow: [containerShadow()],
           gradient: blueGreenGrad,
           borderRadius: BorderRadius.circular(15)
         ),
@@ -45,8 +49,9 @@ class WidgetSearchCards extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    modelObj.date.toString().replaceRange(10, null, ''),
-                    style: const TextStyle(color: backBlack, fontSize: 10),
+                    parseDate(modelObj.date),
+                    // modelObj.date.toString().replaceRange(10, null, ''),
+                    style: const TextStyle(color: backBlack, fontSize: 13,fontWeight: FontWeight.bold),
                   )
                 ],
               ),

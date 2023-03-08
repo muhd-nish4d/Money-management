@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:tracker/problems/amount_totals.dart';
-import 'package:tracker/screens/category_main_screen.dart';
-import '../color/color.dart';
-import '../widgets/appBar/appbar.dart';
-import '../widgets/drawer_widget.dart';
-import '../widgets/home_screen/category_add_btn.dart';
-import '../widgets/home_screen/home_trans_add_btn.dart';
-import '../widgets/home_screen/recent_widget.dart';
-import '../widgets/home_screen/status_screen.dart';
+import '../../consts/color.dart';
+import '../../widgets/appBar/appbar.dart';
+import '../../widgets/drawer/drawer_widget.dart';
+import '../../widgets/category/category_add_btn.dart';
+import '../../widgets/home_screen/home_trans_add_btn.dart';
+import '../../widgets/home_screen/recent_widget.dart';
+import '../../widgets/home_screen/status_screen.dart';
+import '../../widgets/search/popupmenu_datepicker.dart';
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
@@ -60,12 +60,11 @@ class ScreenHome extends StatelessWidget {
               ),
             ),
             const Padding(
-              padding:  EdgeInsets.only(bottom: 9),
+              padding: EdgeInsets.only(bottom: 9),
               child: Align(
-                alignment: Alignment.bottomCenter,
-                //Category adding button
-                child: WidgetCategoryAddBtn()
-              ),
+                  alignment: Alignment.bottomCenter,
+                  //Category adding button
+                  child: WidgetCategoryAddBtn()),
             )
           ],
         ),

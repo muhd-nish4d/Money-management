@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../color/color.dart';
+import '../../consts/color.dart';
 import '../../screens/transactions/adding_income_expense_btn_screen.dart';
 
 class WidgetTransactionAddButton extends StatelessWidget {
@@ -21,7 +21,7 @@ class WidgetTransactionAddButton extends StatelessWidget {
           },
           child:  Text(
             category,
-            style: TextStyle(
+            style: const TextStyle(
                 color: greyWhite, fontSize: 20, fontWeight: FontWeight.bold),
           )),
     );

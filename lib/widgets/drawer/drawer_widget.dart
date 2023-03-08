@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tracker/screens/settings_screen.dart';
+import 'package:tracker/consts/color.dart';
+import 'package:tracker/screens/settings/settings_screen.dart';
 
 class WidgetDrawer extends StatelessWidget {
   const WidgetDrawer({super.key});
@@ -7,12 +8,11 @@ class WidgetDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-       shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(15),
-                topRight: Radius.circular(15))),
-        backgroundColor: Color.fromARGB(255, 18, 41, 72),
-        child:  Column(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(15), topRight: Radius.circular(15))),
+      backgroundColor: backBlack,
+      child: Column(
         children: [
           // Container(
           //   height: 200,
@@ -85,24 +85,42 @@ class WidgetDrawer extends StatelessWidget {
           //Share button
           SizedBox(
             height: 50,
-            width: MediaQuery.of(context).size.width * .6,
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-              onPressed: () {
-                
-    
-                
-              },
-              icon: const Icon(
-                Icons.ios_share_rounded,
-                color: Color.fromARGB(255, 14, 31, 51),
+            width: MediaQuery.of(context).size.width * .7,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: backBlack),
+              onPressed: () {},
+              child: Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    gradient: blueGreenGrad,
+                    borderRadius: BorderRadius.circular(15)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:const [
+                    Icon(
+                      Icons.ios_share_rounded,
+                      color: backBlack,
+                    ),
+                    SizedBox(width: 10,),
+                    Text(
+                      'Share',
+                      style: TextStyle(
+                          color: backBlack, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
               ),
-              label: const Text(
-                'Share',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 14, 31, 51),
-                    fontWeight: FontWeight.bold),
-              ),
+              // icon: const Icon(
+              //   Icons.ios_share_rounded,
+              //   color: Color.fromARGB(255, 14, 31, 51),
+              // ),
+              // label: const Text(
+              //   'Share',
+              //   style: TextStyle(
+              //       color: Color.fromARGB(255, 14, 31, 51),
+              //       fontWeight: FontWeight.bold),
+              // ),
             ),
           ),
           const SizedBox(
@@ -111,23 +129,35 @@ class WidgetDrawer extends StatelessWidget {
           //Settings button
           SizedBox(
             height: 50,
-            width: MediaQuery.of(context).size.width * .6,
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+            width: MediaQuery.of(context).size.width * .7,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: backBlack),
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) => const ScreenSettings(),
                 ));
               },
-              icon: const Icon(
-                Icons.settings,
-                color: Color.fromARGB(255, 14, 31, 51),
-              ),
-              label: const Text(
-                'Settings',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 14, 31, 51),
-                    fontWeight: FontWeight.bold),
+              child:  Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    gradient: blueGreenGrad,
+                    borderRadius: BorderRadius.circular(15)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:const [
+                    Icon(
+                      Icons.settings,
+                      color: backBlack,
+                    ),
+                    SizedBox(width: 10,),
+                    Text(
+                      'Settings',
+                      style: TextStyle(
+                          color: backBlack, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tracker/widgets/delete_edit_bottum_sheet.dart';
+import 'package:tracker/widgets/category/delete_edit_bottum_sheet.dart';
+import '../../consts/color.dart';
+import '../../consts/container_shadow.dart';
 import '../../db_functions/category/category_db_functions.dart';
 import '../../models/category/category_model.dart';
 
@@ -12,7 +14,7 @@ class ScreenIncome extends StatelessWidget {
       valueListenable: CategoryDB().incomeCategoryList,
       builder: (BuildContext ctx, List<CategoryModel> incomeList, Widget? _) {
         return Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20,top: 10),
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 1.6,
@@ -23,22 +25,32 @@ class ScreenIncome extends StatelessWidget {
               final income = incomeList[index];
               return SizedBox(
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 206, 164, 52),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: backBlack,
                   ),
-                  onPressed: (){},
-                  onLongPress: (){
-                    deleteEditBottumSheet(context,categoryID: income.id,categeryName: income.name);
+                  onPressed: () {},
+                  onLongPress: () {
+                    deleteEditBottumSheet(context,
+                        categoryID: income.id, categeryName: income.name);
                   },
-                  child: Text(
-                    income.name,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 18, 41, 72)),
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                        gradient: blueGreenGrad,
+                        borderRadius: BorderRadius.circular(15),boxShadow: [containerShadow()]),
+                    child: Center(
+                      child: Text(
+                        income.name,
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 18, 41, 72)),
+                      ),
+                    ),
                   ),
                 ),
-                );
+              );
             },
             itemCount: incomeList.length,
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tracker/widgets/toast.dart';
+import 'package:tracker/consts/toast.dart';
 
 import '../db_functions/transactions/transaction_db_functions.dart';
 import '../problems/amount_totals.dart';

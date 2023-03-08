@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tracker/color/color.dart';
+
+import '../../consts/color.dart';
 
 class WidgetAppBar extends StatelessWidget {
-  String title;
-  WidgetAppBar({super.key, required this.title});
+  final String title;
+  const WidgetAppBar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
