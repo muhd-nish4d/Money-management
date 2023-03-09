@@ -8,7 +8,6 @@ import '../../widgets/category/category_add_btn.dart';
 import '../../widgets/home_screen/home_trans_add_btn.dart';
 import '../../widgets/home_screen/recent_widget.dart';
 import '../../widgets/home_screen/status_screen.dart';
-import '../../widgets/search/popupmenu_datepicker.dart';
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
@@ -25,8 +24,8 @@ class ScreenHome extends StatelessWidget {
     return Scaffold(
       //rgb(247, 247, 247)
       backgroundColor: backBlack,
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(55),
+      appBar:const  PreferredSize(
+          preferredSize:  Size.fromHeight(55),
           //AppBar
           child: WidgetAppBar(title: 'Money Tracker')),
       //Drawer

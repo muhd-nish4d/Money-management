@@ -9,6 +9,7 @@ abstract class TransacrionDBFunctions {
   Future<List<TransactionModel>> getTransactions();
   Future<void> deleteTransactions(String transId);
   Future<void> editTransactionDb(TransactionModel obj);
+  Future<void> transactionClear();
 }
 
 class TransactionDB implements TransacrionDBFunctions {
@@ -58,5 +59,12 @@ class TransactionDB implements TransacrionDBFunctions {
   Future<void> editTransactionDb(TransactionModel obj) async{
     final transactionDB = await Hive.openBox<TransactionModel>(transactionDBName);
     transactionDB.put(obj.id, obj);
+  }
+  
+  @override
+  Future<void> transactionClear()async {
+    final transactionDB = await Hive.openBox<TransactionModel>(transactionDBName);
+    await transactionDB.clear();
+    refreshTransUI();
   }
 }

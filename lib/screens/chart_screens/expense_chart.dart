@@ -13,14 +13,20 @@ class ScreenExpenseChart extends StatefulWidget {
 }
 
 class _ScreenExpenseChartState extends State<ScreenExpenseChart> {
-  Map<String, double> expenseChartData = {'': 0};
+  Map<String, double> expenseChartData = {};
 
   void expenseSetup() {
-    expenseChartData.clear();
-    for (var item in TransactionDB.instance.transactionListNotifier.value
+   for (var item in TransactionDB.instance.transactionListNotifier.value
         .where((element) => element.type == CategoryType.expense)) {
-      Map<String, double> datas = {item.category.name: item.amount};
-      expenseChartData.addAll(datas);
+          //If map key is alredy exist the amount add to the key's value
+      if (expenseChartData.containsKey(item.category.name)) {
+
+        expenseChartData[item.category.name] =
+            item.amount + expenseChartData[item.category.name]!;
+      } else {
+          //Create a new key value pair
+          expenseChartData[item.category.name] = item.amount;
+      }
     }
   }
 
@@ -28,16 +34,21 @@ class _ScreenExpenseChartState extends State<ScreenExpenseChart> {
   Widget build(BuildContext context) {
     expenseSetup();
     return expenseChartData.isEmpty
-        ? const Center(child:  Text('No Data',style: TextStyle(color: greyWhite,fontWeight: FontWeight.bold,fontSize: 20),))
+        ? const Center(
+            child: Text(
+            'No Data',
+            style: TextStyle(
+                color: greyWhite, fontWeight: FontWeight.bold, fontSize: 20),
+          ))
         : PieChart(
             // centerTextStyle: TextStyle(color: Colors.white),
             // animationDuration: Duration(seconds: 1),
             dataMap: expenseChartData,
-          legendOptions: const LegendOptions(legendTextStyle: TextStyle(color: Colors.white)),
-            
+            legendOptions: const LegendOptions(
+                legendTextStyle: TextStyle(color: Colors.white)),
+
             chartValuesOptions: const ChartValuesOptions(
-              
-              showChartValuesInPercentage: true,
+              // showChartValuesInPercentage: true,
               chartValueStyle: TextStyle(
                   fontSize: 15,
                   color: Colors.black,

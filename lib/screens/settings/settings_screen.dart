@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tracker/consts/color.dart';
+import 'package:tracker/screens/settings/screens/about_screen.dart';
+import 'package:tracker/screens/settings/screens/privacy_policy.dart';
+import 'package:tracker/screens/settings/screens/reset.dart';
+import 'package:tracker/screens/splash/splash_screen.dart';
+
+import '../../widgets/appBar/appbar.dart';
 
 class ScreenSettings extends StatelessWidget {
   const ScreenSettings({super.key});
@@ -8,43 +14,50 @@ class ScreenSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backBlack,
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 14, 31, 51),
-        title: const Text(
-          'Settings',
-          style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
-        ),
-      ),
+      appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(55),
+          //AppBar
+          child: WidgetAppBar(title: 'Settings')),
       body: Column(
-        children: const [
+        children: [
           ListTile(
-            leading: Text(
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (ctx) => const ScreenAbout()));
+            },
+            leading:const Text(
               'About',
-              style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+              style: TextStyle(color: greyWhite),
             ),
           ),
           ListTile(
-            leading: Text(
+            onTap: () {
+              resetAlert(context);
+            },
+            leading:const Text(
               'Reset',
-              style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+              style: TextStyle(color: greyWhite),
             ),
           ),
-          ListTile(
+          const ListTile(
             leading: Text(
               'Feedback',
-              style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+              style: TextStyle(color: greyWhite),
             ),
           ),
           ListTile(
+            onTap:() {
+              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) =>const ScreenPrivacyPolicy()));
+            },
             leading: Text(
               'Privacy Policy',
-              style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+              style: TextStyle(color: greyWhite),
             ),
           ),
           ListTile(
             leading: Text(
               'Terms and conditions',
-              style: TextStyle(color: Color.fromARGB(255, 206, 164, 52)),
+              style: TextStyle(color: greyWhite),
             ),
           )
         ],

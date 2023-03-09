@@ -10,6 +10,7 @@ abstract class CategoryDBFunctions {
   Future<void> insertCategory(CategoryModel value);
   Future<void> deleteCategory(String categoryID);
   Future<void> editCategory(CategoryModel value);
+  Future<void> categoryClear();
 }
 
 class CategoryDB implements CategoryDBFunctions {
@@ -63,5 +64,12 @@ class CategoryDB implements CategoryDBFunctions {
     final categoryDB = await Hive.openBox<CategoryModel>(categoryDBName);
     await categoryDB.put(value.id, value);
     refreshUI();    
+  }
+  
+  @override
+  Future<void> categoryClear() async{
+    final categoryDB = await Hive.openBox<CategoryModel>(categoryDBName);
+    await categoryDB.clear();
+    refreshUI();
   }
 }

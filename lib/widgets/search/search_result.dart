@@ -43,6 +43,10 @@ class WidgerSearchResult extends StatelessWidget {
                         value.amount
                             .toString()
                             .toLowerCase()
+                            .contains(query.toLowerCase().trim()) ||
+                        value.note
+                            .toString()
+                            .toLowerCase()
                             .contains(query.toLowerCase().trim())) {
                       return Slidable(
                         startActionPane: ActionPane(
@@ -50,7 +54,8 @@ class WidgerSearchResult extends StatelessWidget {
                             children: [
                               SlidableAction(
                                 onPressed: (ctx) async {
-                                  alertMassege(context, id: value.id.toString());
+                                  alertMassege(context,
+                                      id: value.id.toString());
                                   Amounts().totalAmount();
                                 },
                                 backgroundColor: backBlack,

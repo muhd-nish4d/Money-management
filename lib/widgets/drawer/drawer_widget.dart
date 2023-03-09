@@ -133,6 +133,7 @@ class WidgetDrawer extends StatelessWidget {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: backBlack),
               onPressed: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) => const ScreenSettings(),
                 ));
