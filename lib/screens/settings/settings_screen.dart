@@ -4,6 +4,7 @@ import 'package:tracker/screens/settings/screens/about_screen.dart';
 import 'package:tracker/screens/settings/screens/privacy_policy.dart';
 import 'package:tracker/screens/settings/screens/reset.dart';
 import 'package:tracker/screens/splash/splash_screen.dart';
+import 'package:tracker/widgets/search/date_rangefilter_date_picker.dart';
 
 import '../../widgets/appBar/appbar.dart';
 
@@ -55,6 +56,9 @@ class ScreenSettings extends StatelessWidget {
             ),
           ),
           ListTile(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) =>const WidgetDateRangePicker()));
+            },
             leading: Text(
               'Terms and conditions',
               style: TextStyle(color: greyWhite),

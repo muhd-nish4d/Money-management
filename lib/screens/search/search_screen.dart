@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tracker/consts/color.dart';
 import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:tracker/models/category/category_model.dart';
+import '../../widgets/search/date_rangefilter_date_picker.dart';
 import '../../widgets/search/popupmenu_datepicker.dart';
 import '../../widgets/search/search_result.dart';
 
@@ -90,6 +91,19 @@ class ScreenSearch extends SearchDelegate {
           //           print(selectedDateLast);
           //     },
           //     child: const WidgetPopupMenuDatePick())
+          PopupMenuItem(
+              onTap: () async {
+                if (first == null || second == null) {
+                  return;
+                } else {
+                  await TransactionDB.instance.refreshTransUI();
+                  filterListener.value = TransactionDB
+                      .instance.transactionFilterNotifier.value
+                      .where((element) => element.date
+                          .isAfter(first!.subtract(Duration(days: 1))) && element.date.isBefore(second!.add(Duration(days: 1)))).toList();
+                }
+              },
+              child: const WidgetDateRangePicker())
         ],
       ),
       PopupMenuButton(
