@@ -1,8 +1,14 @@
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:tracker/consts/color.dart';
 import 'package:tracker/screens/settings/screens/about_screen.dart';
+import 'package:tracker/screens/settings/screens/feedback.dart';
 import 'package:tracker/screens/settings/screens/privacy_policy.dart';
 import 'package:tracker/screens/settings/screens/reset.dart';
+import 'package:tracker/screens/settings/screens/terms_conditions.dart';
 import 'package:tracker/screens/splash/splash_screen.dart';
 import 'package:tracker/widgets/search/date_rangefilter_date_picker.dart';
 
@@ -26,7 +32,7 @@ class ScreenSettings extends StatelessWidget {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (ctx) => const ScreenAbout()));
             },
-            leading:const Text(
+            leading: const Text(
               'About',
               style: TextStyle(color: greyWhite),
             ),
@@ -35,20 +41,24 @@ class ScreenSettings extends StatelessWidget {
             onTap: () {
               resetAlert(context);
             },
-            leading:const Text(
+            leading: const Text(
               'Reset',
               style: TextStyle(color: greyWhite),
             ),
           ),
-          const ListTile(
+          ListTile(
+            onTap: ()async{
+              await sendEmail();
+            },
             leading: Text(
               'Feedback',
               style: TextStyle(color: greyWhite),
             ),
           ),
           ListTile(
-            onTap:() {
-              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) =>const ScreenPrivacyPolicy()));
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => const ScreenPrivacyPolicy()));
             },
             leading: Text(
               'Privacy Policy',
@@ -57,7 +67,8 @@ class ScreenSettings extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) =>const WidgetDateRangePicker()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => const ScreenTermsandConditions()));
             },
             leading: Text(
               'Terms and conditions',
@@ -68,6 +79,16 @@ class ScreenSettings extends StatelessWidget {
       ),
     );
   }
+}
+sendEmail() async {
+  final Email email =  Email(
+    body: 'HELP!',
+    subject: 'Problem',
+    recipients: ['mn0265616@gmail.com'],
+    isHTML: false,
+  );
+ await FlutterEmailSender.send(email);
+ log(email.toString());
 }
 //Yellow = fromARGB(255, 206, 164, 52)
 //Dark blue = fromARGB(255, 14, 31, 51)

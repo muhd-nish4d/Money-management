@@ -92,18 +92,23 @@ class ScreenSearch extends SearchDelegate {
           //     },
           //     child: const WidgetPopupMenuDatePick())
           PopupMenuItem(
-              onTap: () async {
-                if (first == null || second == null) {
-                  return;
-                } else {
-                  await TransactionDB.instance.refreshTransUI();
-                  filterListener.value = TransactionDB
-                      .instance.transactionFilterNotifier.value
-                      .where((element) => element.date
-                          .isAfter(first!.subtract(Duration(days: 1))) && element.date.isBefore(second!.add(Duration(days: 1)))).toList();
-                }
-              },
-              child: const WidgetDateRangePicker())
+            onTap: () async {
+              if (first == null || second == null) {
+                return;
+              } else {
+                await TransactionDB.instance.refreshTransUI();
+                filterListener.value = TransactionDB
+                    .instance.transactionFilterNotifier.value
+                    .where((element) =>
+                        element.date.isAfter(
+                            first!.subtract(const Duration(days: 1))) &&
+                        element.date
+                            .isBefore(second!.add(const Duration(days: 1))))
+                    .toList();
+              }
+            },
+            child: const WidgetDateRangePicker(),
+          )
         ],
       ),
       PopupMenuButton(
