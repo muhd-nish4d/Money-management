@@ -120,81 +120,84 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                     height: 10,
                   ),
                   //Category select and button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * .75,
-                        height: 70,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              gradient: blueGreenGrad,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [containerShadow()]),
-                          // borderOnForeground: true,
-                          // elevation: 10,
-                          // shape: RoundedRectangleBorder(
-                          //     borderRadius: BorderRadius.circular(15),
-                          //     //<-- SEE HERE
-                          //     side: const BorderSide(
-                          //       width: 2,
-                          //       color: greyWhite,
-                          //     )),
-
-                          child: DropdownButtonHideUnderline(
-                            child: ButtonTheme(
-                              alignedDropdown: true,
-                              child: DropdownButton<String>(
-                                  iconEnabledColor: Colors.black,
-                                  iconDisabledColor: Colors.grey,
-                                  value: categoryID,
-                                  borderRadius: BorderRadius.circular(15),
-                                  dropdownColor: greyWhite,
-                                  hint: const Text(
-                                    'Select category',
-                                    style: TextStyle(color: backBlack),
-                                  ),
-                                  style: const TextStyle(color: backBlack),
-                                  onChanged: (selectedValue) {
-                                    setState(() {
-                                      categoryID = selectedValue;
-                                    });
-                                  },
-                                  items: (selectedCategoryType ==
-                                              CategoryType.income
-                                          ? CategoryDB().incomeCategoryList
-                                          : CategoryDB().expenseCategoryList)
-                                      .value
-                                      .map((e) {
-                                    return DropdownMenuItem(
-                                      value: e.id,
-                                      child: Text(e.name),
-                                      onTap: () {
-                                        selectedCategoryModel = e;
-                                      },
-                                    );
-                                  }).toList()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .65,
+                          height: 70,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                gradient: blueGreenGrad,
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [containerShadow()]),
+                            // borderOnForeground: true,
+                            // elevation: 10,
+                            // shape: RoundedRectangleBorder(
+                            //     borderRadius: BorderRadius.circular(15),
+                            //     //<-- SEE HERE
+                            //     side: const BorderSide(
+                            //       width: 2,
+                            //       color: greyWhite,
+                            //     )),
+                  
+                            child: DropdownButtonHideUnderline(
+                              child: ButtonTheme(
+                                alignedDropdown: true,
+                                child: DropdownButton<String>(
+                                    iconEnabledColor: Colors.black,
+                                    iconDisabledColor: Colors.grey,
+                                    value: categoryID,
+                                    borderRadius: BorderRadius.circular(15),
+                                    dropdownColor: greyWhite,
+                                    hint: const Text(
+                                      'Select category',
+                                      style: TextStyle(color: backBlack),
+                                    ),
+                                    style: const TextStyle(color: backBlack),
+                                    onChanged: (selectedValue) {
+                                      setState(() {
+                                        categoryID = selectedValue;
+                                      });
+                                    },
+                                    items: (selectedCategoryType ==
+                                                CategoryType.income
+                                            ? CategoryDB().incomeCategoryList
+                                            : CategoryDB().expenseCategoryList)
+                                        .value
+                                        .map((e) {
+                                      return DropdownMenuItem(
+                                        value: e.id,
+                                        child: Text(e.name),
+                                        onTap: () {
+                                          selectedCategoryModel = e;
+                                        },
+                                      );
+                                    }).toList()),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      //Amount add
-                      SizedBox(
-                        height: 60,
-                        width: 60,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            showCategoryAddPopupInTrans(context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              elevation: 10, backgroundColor: backBlack),
-                          child: const Icon(
-                            Icons.add,
-                            color: greyWhite,
+                        //Amount add
+                        SizedBox(
+                          height: 60,
+                          width: 60,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              showCategoryAddPopupInTrans(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                                elevation: 10, backgroundColor: backBlack),
+                            child: const Icon(
+                              Icons.add,
+                              color: greyWhite,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 20,

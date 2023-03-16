@@ -254,6 +254,9 @@ class _ScreenEditState extends State<ScreenEdit> {
                               DateTime.now().subtract(const Duration(days: 30)),
                           lastDate: DateTime.now(),
                         );
+                        if (editedDate == null) {
+                          return;
+                        }
                         setState(() {
                           selectedDateinEdit = editedDate;
                         });

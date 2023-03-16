@@ -12,8 +12,19 @@ class ScreenTermsandConditions extends StatelessWidget {
       color: Colors.white,
       child: SafeArea(
           child: ListView(
-        children: const [
-          Padding(
+        children:  [
+           Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(onPressed: (){
+                  Navigator.of(context).pop();
+                }, icon: const Icon(Icons.arrow_back)),
+                const Text('Terms and Conditions',style: TextStyle(decoration: TextDecoration.none,color:backBlack, fontSize: 20),),
+                const SizedBox()
+              ],
+            ),
+            const SizedBox(height: 20,),
+          const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
     '''Welcome to Money Tracker, a money management app designed to help you track your finances and manage your money. By using this app, you agree to be bound by the following terms and conditions:

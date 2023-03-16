@@ -3,8 +3,7 @@ import 'package:tracker/consts/color.dart';
 import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:tracker/models/category/category_model.dart';
 import '../../widgets/search/date_rangefilter_date_picker.dart';
-import '../../widgets/search/popupmenu_datepicker.dart';
-import '../../widgets/search/search_result.dart';
+import '../../widgets/search/search_result/search_result.dart';
 
 var filterListener = TransactionDB.instance.transactionFilterNotifier;
 // var selectedValueType = ;
@@ -27,6 +26,7 @@ class ScreenSearch extends SearchDelegate {
             query = '';
           },
           icon: const Icon(Icons.clear)),
+          
       PopupMenuButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         icon: const Icon(Icons.calendar_month_rounded),

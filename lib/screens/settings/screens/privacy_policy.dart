@@ -14,8 +14,19 @@ class ScreenPrivacyPolicy extends StatelessWidget {
           child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
-          children: const [
-            Text(
+          children:  [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(onPressed: (){
+                  Navigator.of(context).pop();
+                }, icon: const Icon(Icons.arrow_back)),
+                const Text('Privacy Policy',style: TextStyle(decoration: TextDecoration.none,color:backBlack, fontSize: 20),),
+                const SizedBox()
+              ],
+            ),
+            const SizedBox(height: 20,),
+            const Text(
               '''At our money management app,''',
               style: TextStyle(
                   decoration: TextDecoration.none,
@@ -23,7 +34,7 @@ class ScreenPrivacyPolicy extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.bold),
             ),
-            Text(
+            const Text(
               '''
 
 we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and protect your personal information. 
@@ -51,14 +62,14 @@ We use your personal information to provide our services to you, such as trackin
                   fontSize: 13,
                   color: backBlack),
             ),
-            Text(
+            const Text(
               'Sharing of Your Information:-',
               style: TextStyle(
                   decoration: TextDecoration.none,
                   fontSize: 15,
                   color: backBlack),
             ),
-            Text(
+            const Text(
               '''
 
 
@@ -76,14 +87,14 @@ We use your personal information to provide our services to you, such as trackin
                   fontSize: 13,
                   color: backBlack),
             ),
-            Text(
+            const Text(
               'Data Security',
               style: TextStyle(
                   decoration: TextDecoration.none,
                   fontSize: 15,
                   color: backBlack),
             ),
-            Text(
+            const Text(
               '''
 
 
@@ -95,14 +106,14 @@ We use your personal information to provide our services to you, such as trackin
                   fontSize: 13,
                   color: backBlack),
             ),
-            Text(
+            const Text(
               'Your Rights',
               style: TextStyle(
                   decoration: TextDecoration.none,
                   fontSize: 15,
                   color: backBlack),
             ),
-            Text(
+            const Text(
               '''
 
 
@@ -114,14 +125,14 @@ You have the right to access, correct, or delete your personal information. You 
                   fontSize: 13,
                   color: backBlack),
             ),
-            Text(
+            const Text(
               'Updates to this Privacy Policy',
               style: TextStyle(
                   decoration: TextDecoration.none,
                   fontSize: 15,
                   color: backBlack),
             ),
-            Text(
+            const Text(
               '''
 
 

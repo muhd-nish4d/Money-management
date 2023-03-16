@@ -17,20 +17,27 @@ class ScreenFullChart extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: chartNotifier,
       builder: (context, value, child) {
-        var total = Amounts.instance.incomeResult.value+Amounts.instance.expenseResult.value;
+        var total = Amounts.instance.incomeResult.value +
+            Amounts.instance.expenseResult.value;
         Map<String, double> totalmappp = {
           'Income': Amounts.instance.incomeResult.value,
           'Expense': Amounts.instance.expenseResult.value,
         };
-        
-        return
-        total == 0?
-        const Center(child:  Text('No Data',style: TextStyle(color: greyWhite,fontWeight: FontWeight.bold,fontSize: 20),)):
-        PieChart(
-          legendOptions: const LegendOptions(legendTextStyle: TextStyle(color: Colors.white)),
-          dataMap: totalmappp,
 
-        );
+        return total == 0
+            ? const Center(
+                child: Text(
+                'No Data',
+                style: TextStyle(
+                    color: greyWhite,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
+              ))
+            : PieChart(
+                legendOptions: const LegendOptions(
+                    legendTextStyle: TextStyle(color: Colors.white)),
+                dataMap: totalmappp,
+              );
       },
     );
 

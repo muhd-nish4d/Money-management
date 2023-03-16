@@ -35,7 +35,7 @@ class WidgetSearchCards extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 70,
+                    width: 200,
                     child: Text(
                       overflow: TextOverflow.ellipsis,
                       modelObj.category.name,
@@ -55,9 +55,10 @@ class WidgetSearchCards extends StatelessWidget {
                   )
                 ],
               ),
-              title: Padding(
-                padding: const EdgeInsets.only(left: 50),
-                child: Text(
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                   Text(
                   "₹${modelObj.amount}",
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -65,8 +66,9 @@ class WidgetSearchCards extends StatelessWidget {
                       fontSize: 28,
                       fontWeight: FontWeight.bold),
                 ),
+                icon
+                ],
               ),
-              trailing: icon,
               ),
         ),
       ),

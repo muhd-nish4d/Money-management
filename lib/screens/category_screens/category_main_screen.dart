@@ -21,7 +21,7 @@ class ScreenCategory extends StatefulWidget {
 class _ScreenCategoryState extends State<ScreenCategory>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-  final categoryNameController = TextEditingController();
+  final TextEditingController categoryNameController = TextEditingController();
 
   @override
   void initState() {
@@ -34,8 +34,8 @@ class _ScreenCategoryState extends State<ScreenCategory>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backBlack,
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(55),
+      appBar:const PreferredSize(
+          preferredSize:  Size.fromHeight(55),
           //AppBar
           child: WidgetAppBar(title: 'Category')),
       body: Column(
@@ -187,6 +187,7 @@ class _ScreenCategoryState extends State<ScreenCategory>
                       await CategoryDB.instance.insertCategory(category);
                       showToast(message: 'Added');
                       Navigator.of(context).pop();
+                      categoryNameController.clear();
                     },
                     child:
                         const Text('Done', style: TextStyle(color: backBlack))),
