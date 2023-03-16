@@ -27,7 +27,7 @@ class ScreenHome extends StatelessWidget {
       appBar:const  PreferredSize(
           preferredSize:  Size.fromHeight(55),
           //AppBar
-          child: WidgetAppBar(title: 'Money Tracker')),
+          child: WidgetAppBar(title: 'Money Mate')),
       //Drawer
       drawer: const WidgetDrawer(),
       body: SafeArea(

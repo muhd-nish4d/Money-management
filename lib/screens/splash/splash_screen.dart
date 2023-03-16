@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:tracker/consts/color.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
@@ -20,7 +21,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
   void initState() {
     super.initState();
     Timer(
-        const Duration(seconds: 3),
+        const Duration(seconds: 7),
         () => Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (ctx) => const ScreenHome())));
   }
@@ -38,14 +39,31 @@ class _ScreenSplashState extends State<ScreenSplash> {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(gradient: blueGreenGrad),
-      child: const Center(
-        child: Text('Money Tracker',
-            style: TextStyle(
-                decoration: TextDecoration.none,
-                color: backBlack,
-                fontSize: 30,
-                fontFamily: 'Inter')),
+      decoration: const BoxDecoration(
+        color: backBlack
+        // gradient: blueGreenGrad
+        ),
+      child:  Center(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15)
+          ),
+          child: TextLiquidFill(
+
+            text: 'MoneyMate',
+            waveColor: greyWhite,
+            boxBackgroundColor: backBlack,
+            textStyle:const TextStyle(
+              fontSize: 30.0,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.none
+            ),
+            boxHeight: 100.0,
+
+            // boxWidth: 230,
+          ),
+        ),
       ),
     );
   }

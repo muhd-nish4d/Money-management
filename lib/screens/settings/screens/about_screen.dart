@@ -20,7 +20,7 @@ class ScreenAbout extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Text(
-              'Money Tracker',
+              'Money Mate',
               style: TextStyle(
                   color: backBlack, fontWeight: FontWeight.bold, fontSize: 20),
             ),

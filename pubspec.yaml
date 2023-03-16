@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  animated_text_kit: 4.2.2
   bottom_sheet: 3.1.2
   charts_flutter_new: 0.12.0
   cupertino_icons: 1.0.2
@@ -49,6 +50,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: 2.0.0
+  flutter_launcher_icons: 0.12.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/ic_launcher.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
