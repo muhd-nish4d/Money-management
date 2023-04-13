@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracker/consts/container_shadow.dart';
 import 'package:tracker/consts/toast.dart';
 
+import '../../blocs/category/category_bloc.dart';
 import '../../consts/color.dart';
 import '../../db_functions/category/category_db_functions.dart';
 import '../../models/category/category_model.dart';
@@ -64,7 +66,10 @@ Future<void> showEditBottumSheet(BuildContext ctx,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               child: Container(
-                decoration: BoxDecoration(gradient: blueGreenGrad,borderRadius: BorderRadius.circular(15),boxShadow: [containerShadow()]),
+                decoration: BoxDecoration(
+                    gradient: blueGreenGrad,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [containerShadow()]),
                 child: TextFormField(
                   controller: catogerynameEditingController,
                   textAlign: TextAlign.center,
@@ -98,21 +103,28 @@ Future<void> showEditBottumSheet(BuildContext ctx,
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: gradGreen),
+                  style: ElevatedButton.styleFrom(backgroundColor: gradGreen),
                   onPressed: () async {
                     final categoryName = catogerynameEditingController.text;
-                    final categoryCap = categoryName.substring(0,1).toUpperCase()+categoryName.substring(1);
+                    final categoryCap =
+                        categoryName.substring(0, 1).toUpperCase() +
+                            categoryName.substring(1);
                     if (categoryCap.isEmpty) {
                       return;
                     }
                     final type = selectedCategoryType.value;
-                    final category = CategoryModel(
-                      id: idCategory,
-                      name: categoryCap,
-                      type: type,
-                    );
+                    // final category = CategoryModel(
+                    //   id: idCategory,
+                    //   name: categoryCap,
+                    //   type: type,
+                    // );
+                    /*
+                    After bloc========================================================
                     await CategoryDB.instance.editCategory(category);
+                    */
+                    BlocProvider.of<CategoryBloc>(context).add(
+                        CategoryEditEvent(
+                            id: idCategory, name: categoryCap, type: type));
                     showToast(message: 'Edited');
                     Navigator.of(context).pop();
                   },

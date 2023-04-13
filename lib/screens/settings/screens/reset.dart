@@ -14,7 +14,8 @@ Future<void> resetAlert(BuildContext ctx) async {
         actions: [
           TextButton(
               onPressed: () async {
-                CategoryDB.instance.categoryClear();
+                //after bloc
+                // CategoryDB.instance.categoryClear();
                 TransactionDB.instance.transactionClear();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(

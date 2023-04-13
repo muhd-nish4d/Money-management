@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
 
 import '../../models/category/category_model.dart';
+
 ValueNotifier<CategoryType> selectedCategoryTypeinAdd =
     ValueNotifier(CategoryType.income);
 
@@ -52,9 +53,9 @@ Future<void> showCategoryAddPopupInTrans(BuildContext context) async {
       return AlertDialog(
         backgroundColor: const Color.fromARGB(255, 18, 41, 72),
         title: Row(
-          children:const [
-             RadioButtonWidgetforAdd(title: 'Income', type: CategoryType.income),
-             RadioButtonWidgetforAdd(
+          children: const [
+            RadioButtonWidgetforAdd(title: 'Income', type: CategoryType.income),
+            RadioButtonWidgetforAdd(
                 title: 'Expense', type: CategoryType.expense)
           ],
         ),
@@ -98,7 +99,9 @@ Future<void> showCategoryAddPopupInTrans(BuildContext context) async {
                     id: DateTime.now().microsecondsSinceEpoch.toString(),
                     name: categoryName,
                     type: categoryType);
+                /* After Bloc ======================================================
                     CategoryDB.instance.insertCategory(category);
+                    */
                 Navigator.of(context).pop();
               },
               child: const Text(

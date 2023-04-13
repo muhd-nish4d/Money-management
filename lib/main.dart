@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tracker/blocs/category/category_bloc.dart';
+import 'package:tracker/db_functions/category/category_db_functions.dart';
 import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
 import 'package:tracker/screens/splash/splash_screen.dart';
@@ -13,7 +16,7 @@ Future<void> main() async {
   if (!Hive.isAdapterRegistered(CategoryModelAdapter().typeId)) {
     Hive.registerAdapter(CategoryModelAdapter());
   }
-   if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
+  if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
     Hive.registerAdapter(TransactionModelAdapter());
   }
   runApp(const MyApp());
@@ -25,17 +28,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Money Mate',
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          color: Colors.blue
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CategoryBloc(CategoryDBFunctions()),
+        )
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Money Mate',
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(color: Colors.blue),
+          useMaterial3: true,
+          primarySwatch: Colors.blue,
         ),
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
+        home: const ScreenSplash(),
       ),
-      home: const ScreenSplash(),
     );
   }
 }

@@ -20,7 +20,6 @@ class Amounts {
     incomeResult.value = 0;
     expenseResult.value = 0;
     // double expenseTotal = 0;
-
     for (var total in TransactionDB.instance.transactionListNotifier.value) {
       if (total.type == CategoryType.income) {
         // }
@@ -31,7 +30,6 @@ class Amounts {
         // expenseResult.value = expenseTotal;
       }
     }
-
     totalResult.value = incomeResult.value - expenseResult.value;
   }
 }

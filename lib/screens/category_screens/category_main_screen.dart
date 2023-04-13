@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracker/blocs/category/category_bloc.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
 import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/screens/category_screens/expense_screen.dart';
@@ -26,7 +28,7 @@ class _ScreenCategoryState extends State<ScreenCategory>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
-    CategoryDB().refreshUI();
+    // CategoryDB().refreshUI();
     super.initState();
   }
 
@@ -34,8 +36,8 @@ class _ScreenCategoryState extends State<ScreenCategory>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backBlack,
-      appBar:const PreferredSize(
-          preferredSize:  Size.fromHeight(55),
+      appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(55),
           //AppBar
           child: WidgetAppBar(title: 'Category')),
       body: Column(
@@ -174,17 +176,26 @@ class _ScreenCategoryState extends State<ScreenCategory>
                     style: ElevatedButton.styleFrom(backgroundColor: gradGreen),
                     onPressed: () async {
                       final categoryName = categoryNameController.text;
-                      final categoryCap = categoryName.substring(0,1).toUpperCase()+categoryName.substring(1);
+                      final categoryCap =
+                          categoryName.substring(0, 1).toUpperCase() +
+                              categoryName.substring(1);
                       if (categoryCap.isEmpty) {
                         return;
                       }
                       final type = selectedCategoryType.value;
-                      final category = CategoryModel(
-                        id: DateTime.now().microsecondsSinceEpoch.toString(),
-                        name: categoryCap,
-                        type: type,
-                      );
-                      await CategoryDB.instance.insertCategory(category);
+                      // final category = CategoryModel(
+                      //   id: DateTime.now().microsecondsSinceEpoch.toString(),
+                      //   name: categoryCap,
+                      //   type: type,
+                      // );
+                      // await CategoryDB.instance.insertCategory(category);
+                      BlocProvider.of<CategoryBloc>(context).add(
+                          CategoryAddEvent(
+                              id: DateTime.now()
+                                  .microsecondsSinceEpoch
+                                  .toString(),
+                              name: categoryCap,
+                              type: type));
                       showToast(message: 'Added');
                       Navigator.of(context).pop();
                       categoryNameController.clear();

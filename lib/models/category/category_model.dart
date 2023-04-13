@@ -1,5 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 part 'category_model.g.dart';
+
 @HiveType(typeId: 2)
 enum CategoryType {
   @HiveField(0)
@@ -11,7 +12,7 @@ enum CategoryType {
 @HiveType(typeId: 1)
 class CategoryModel {
   @HiveField(0)
-  final String id;
+  String id;
   @HiveField(1)
   final String name;
   @HiveField(2)

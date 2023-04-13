@@ -142,7 +142,8 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                             //       width: 2,
                             //       color: greyWhite,
                             //     )),
-                  
+                            /*
+====================================================After Bloc=============================================
                             child: DropdownButtonHideUnderline(
                               child: ButtonTheme(
                                 alignedDropdown: true,
@@ -178,6 +179,8 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                                     }).toList()),
                               ),
                             ),
+=========================================================================================================
+                            */
                           ),
                         ),
                         //Amount add
@@ -289,7 +292,7 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                           lastDate: DateTime.now(),
                         );
                         if (selectedDate == null) {
-                          return; 
+                          return;
                         } else {
                           setState(() {
                             selectedDateTime = selectedDate;

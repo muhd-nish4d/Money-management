@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracker/consts/color.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
 
 import 'package:tracker/screens/home/home_screen.dart';
 
+import '../../blocs/category/category_bloc.dart';
 import '../../db_functions/transactions/transaction_db_functions.dart';
 
 class ScreenSplash extends StatefulWidget {
@@ -28,7 +30,9 @@ class _ScreenSplashState extends State<ScreenSplash> {
 
   @override
   Widget build(BuildContext context) {
-    CategoryDB.instance.refreshUI();
+    //after bloc
+    BlocProvider.of<CategoryBloc>(context).add(CategoryInitialEvent());
+    // CategoryDB.instance.refreshUI();
     TransactionDB.instance.refreshTransUI();
     // Amounts.instance.totalAmount();
     // return Scaffold(
@@ -39,26 +43,21 @@ class _ScreenSplashState extends State<ScreenSplash> {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
-        color: backBlack
-        // gradient: blueGreenGrad
-        ),
-      child:  Center(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15)
+      decoration: const BoxDecoration(color: backBlack
+          // gradient: blueGreenGrad
           ),
+      child: Center(
+        child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
           child: TextLiquidFill(
-
             text: 'MoneyMate',
             waveColor: greyWhite,
             boxBackgroundColor: backBlack,
-            textStyle:const TextStyle(
-              fontSize: 30.0,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.none
-            ),
+            textStyle: const TextStyle(
+                fontSize: 30.0,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.none),
             boxHeight: 100.0,
 
             // boxWidth: 230,

@@ -5,6 +5,7 @@ import 'package:tracker/db_functions/transactions/transaction_db_functions.dart'
 import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
 import 'package:tracker/problems/amount_totals.dart';
+import 'package:tracker/widgets/category/delete_edit_bottum_sheet.dart';
 
 import '../../consts/color.dart';
 import '../../consts/date_parse.dart';
@@ -35,7 +36,12 @@ class _ScreenEditState extends State<ScreenEdit> {
     selectedDateinEdit = widget.transobj.date;
     selectedCategoryTypeinEdit = widget.transobj.type;
     selectedCategoryModelinEdit = widget.transobj.category;
-    categoryId = selectedCategoryModelinEdit!.id;
+    // categoryId = selectedCategoryModelinEdit!.id;
+    if (deleteCategoryId!.contains(selectedCategoryModelinEdit!.id)) {
+      categoryId = null;
+    } else {
+      categoryId = selectedCategoryModelinEdit!.id;
+    }
     super.initState();
   }
 
@@ -133,7 +139,8 @@ class _ScreenEditState extends State<ScreenEdit> {
                       //       width: 2,
                       //       color: Color.fromARGB(255, 206, 164, 52),
                       //     )),
-
+/*
+====================================After Bloc==========================================================
                       child: DropdownButtonHideUnderline(
                         child: ButtonTheme(
                           alignedDropdown: true,
@@ -169,6 +176,8 @@ class _ScreenEditState extends State<ScreenEdit> {
                               }).toList()),
                         ),
                       ),
+=================================================================================================
+                      */
                     ),
                   ),
                   const SizedBox(
@@ -195,11 +204,13 @@ class _ScreenEditState extends State<ScreenEdit> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: TextFormField(
-                            decoration: const InputDecoration(border: InputBorder.none),
+                            decoration:
+                                const InputDecoration(border: InputBorder.none),
                             controller: amountCantroller,
-                            style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
                             textAlign: TextAlign.center,
-                        
+
                             // style: const TextStyle(
                             //     color: greyWhite),
                             // decoration: InputDecoration(
@@ -242,7 +253,10 @@ class _ScreenEditState extends State<ScreenEdit> {
                     height: 10,
                   ),
                   Container(
-                    decoration: BoxDecoration(gradient: blueGreenGrad,borderRadius: BorderRadius.circular(15),boxShadow: [containerShadow()]),
+                    decoration: BoxDecoration(
+                        gradient: blueGreenGrad,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [containerShadow()]),
                     width: MediaQuery.of(context).size.width,
                     height: 60,
                     child: OutlinedButton.icon(
@@ -271,7 +285,7 @@ class _ScreenEditState extends State<ScreenEdit> {
                         //     .toString()
                         //     .replaceRange(10, null, ''),
                         style: const TextStyle(
-                            color: backBlack,fontWeight: FontWeight.bold),
+                            color: backBlack, fontWeight: FontWeight.bold),
                       ),
                       style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -297,7 +311,10 @@ class _ScreenEditState extends State<ScreenEdit> {
                     height: 10,
                   ),
                   Container(
-                    decoration: BoxDecoration(gradient: blueGreenGrad,borderRadius: BorderRadius.circular(15),boxShadow: [containerShadow()]),
+                      decoration: BoxDecoration(
+                          gradient: blueGreenGrad,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [containerShadow()]),
                       height: 200,
                       width: MediaQuery.of(context).size.width,
                       child: Padding(
@@ -306,8 +323,10 @@ class _ScreenEditState extends State<ScreenEdit> {
                           minLines: 7,
                           maxLines: 10,
                           controller: notesController,
-                          decoration: const InputDecoration(border: InputBorder.none),
-                          style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 17),
+                          decoration:
+                              const InputDecoration(border: InputBorder.none),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 17),
                           // style: const TextStyle(
                           //     color: Color.fromARGB(255, 206, 164, 52)),
                           // decoration: InputDecoration(
@@ -339,45 +358,45 @@ class _ScreenEditState extends State<ScreenEdit> {
                 ],
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             SizedBox(
-                    height: 70,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // FocusManager.instance.primaryFocus?.unfocus();
-                        // selectedDateTime ??= DateTime.now();
-                        // addingTransactions();
-                        editTransaction();
-                      },
-                      style:
-                          ElevatedButton.styleFrom(backgroundColor: backBlack),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        decoration: BoxDecoration(
-                          boxShadow: [containerShadow()],
-                          gradient: blueGreenGrad,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.only(top: 23),
-                          child: Text(
-                            'Done',
-                            style: TextStyle(
-                              color: backBlack,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+              height: 70,
+              child: ElevatedButton(
+                onPressed: () {
+                  // FocusManager.instance.primaryFocus?.unfocus();
+                  // selectedDateTime ??= DateTime.now();
+                  // addingTransactions();
+                  editTransaction();
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: backBlack),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    boxShadow: [containerShadow()],
+                    gradient: blueGreenGrad,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 23),
+                    child: Text(
+                      'Done',
+                      style: TextStyle(
+                        color: backBlack,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
-      
     );
   }
 
