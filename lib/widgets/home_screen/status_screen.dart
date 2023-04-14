@@ -4,6 +4,10 @@ import '../../consts/color.dart';
 import '../../problems/amount_totals.dart';
 import '../../screens/chart_screens/circle_chart.dart';
 
+//==================================After Bloc=========================================
+ValueNotifier val = ValueNotifier(0);
+//==================================After Bloc=========================================
+
 class WidgetSatusScreen extends StatelessWidget {
   const WidgetSatusScreen({super.key});
 
@@ -32,7 +36,10 @@ class WidgetSatusScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           ValueListenableBuilder(
-            valueListenable: Amounts.instance.totalResult,
+            //==================================After Bloc=========================================
+            // valueListenable: Amounts.instance.totalResult,
+            valueListenable: val,
+            //==================================After Bloc=========================================
             builder: (context, value, child) {
               return SizedBox(
                 height: 110,
@@ -108,7 +115,10 @@ class WidgetSatusScreen extends StatelessWidget {
                     width: 125,
                     child: Center(
                       child: ValueListenableBuilder(
-                        valueListenable: Amounts.instance.incomeResult,
+                        //==================================After Bloc=========================================
+                        // valueListenable: Amounts.instance.incomeResult,
+                        valueListenable: val,
+                        //==================================After Bloc=========================================
                         builder: (context, value, child) {
                           return Text(
                             '₹$value',
@@ -148,7 +158,10 @@ class WidgetSatusScreen extends StatelessWidget {
                     height: 35,
                     child: Center(
                       child: ValueListenableBuilder(
-                        valueListenable: Amounts.instance.expenseResult,
+                        //==================================After Bloc=========================================
+                        // valueListenable: Amounts.instance.expenseResult,
+                        valueListenable: val,
+                        //==================================After Bloc=========================================
                         builder: (context, value, child) {
                           return Text(
                             '₹$value',
@@ -172,9 +185,11 @@ class WidgetSatusScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(25)),
                       backgroundColor: backBlack),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => const ScreenCircleChart()));
-                    Amounts().totalAmount();
+                    //==================================After Bloc=========================================
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (ctx) => const ScreenCircleChart()));
+                    // Amounts().totalAmount();
+                    //==================================After Bloc=========================================
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 9),

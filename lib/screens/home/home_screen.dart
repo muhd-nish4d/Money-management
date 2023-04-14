@@ -14,10 +14,14 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Amounts.instance.totalAmount();
+    //==================================After Bloc=========================================
+    // Amounts.instance.totalAmount();
+    //==================================After Bloc=========================================
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      TransactionDB.instance.refreshTransUI();
+      //==================================After Bloc=========================================
+      // TransactionDB.instance.refreshTransUI();
+      //==================================After Bloc=========================================
     });
     // Amounts.instance.totalAmount();
     // TransactionDB.instance.refreshTransUI();

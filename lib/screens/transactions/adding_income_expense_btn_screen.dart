@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracker/blocs/category/category_bloc.dart';
+import 'package:tracker/blocs/transactions/transactions_bloc.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
 import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
@@ -142,45 +145,51 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
                             //       width: 2,
                             //       color: greyWhite,
                             //     )),
-                            /*
-====================================================After Bloc=============================================
-                            child: DropdownButtonHideUnderline(
-                              child: ButtonTheme(
-                                alignedDropdown: true,
-                                child: DropdownButton<String>(
-                                    iconEnabledColor: Colors.black,
-                                    iconDisabledColor: Colors.grey,
-                                    value: categoryID,
-                                    borderRadius: BorderRadius.circular(15),
-                                    dropdownColor: greyWhite,
-                                    hint: const Text(
-                                      'Select category',
-                                      style: TextStyle(color: backBlack),
-                                    ),
-                                    style: const TextStyle(color: backBlack),
-                                    onChanged: (selectedValue) {
-                                      setState(() {
-                                        categoryID = selectedValue;
-                                      });
-                                    },
-                                    items: (selectedCategoryType ==
-                                                CategoryType.income
-                                            ? CategoryDB().incomeCategoryList
-                                            : CategoryDB().expenseCategoryList)
-                                        .value
-                                        .map((e) {
-                                      return DropdownMenuItem(
-                                        value: e.id,
-                                        child: Text(e.name),
-                                        onTap: () {
-                                          selectedCategoryModel = e;
+
+// ====================================================After Bloc=============================================
+                            child: BlocBuilder<CategoryBloc, CategoryState>(
+                                builder: (context, state) {
+                              if (state is CategoryShow) {
+                                return DropdownButtonHideUnderline(
+                                  child: ButtonTheme(
+                                    alignedDropdown: true,
+                                    child: DropdownButton<String>(
+                                        iconEnabledColor: Colors.black,
+                                        iconDisabledColor: Colors.grey,
+                                        value: categoryID,
+                                        borderRadius: BorderRadius.circular(15),
+                                        dropdownColor: greyWhite,
+                                        hint: const Text(
+                                          'Select category',
+                                          style: TextStyle(color: backBlack),
+                                        ),
+                                        style:
+                                            const TextStyle(color: backBlack),
+                                        onChanged: (selectedValue) {
+                                          setState(() {
+                                            categoryID = selectedValue;
+                                          });
                                         },
-                                      );
-                                    }).toList()),
-                              ),
-                            ),
-=========================================================================================================
-                            */
+                                        items: (selectedCategoryType ==
+                                                    CategoryType.income
+                                                ? state.incomeCategories
+                                                : state.expenseCategories)
+                                            .map((e) {
+                                          return DropdownMenuItem(
+                                            value: e.id,
+                                            child: Text(e.name),
+                                            onTap: () {
+                                              selectedCategoryModel = e;
+                                            },
+                                          );
+                                        }).toList()),
+                                  ),
+                                );
+                              } else {
+                                return const Text('Something Error');
+                              }
+                            }),
+// =========================================================================================================
                           ),
                         ),
                         //Amount add
@@ -475,20 +484,29 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
     if (parsedAmount == null) {
       return;
     }
-    final transModel = TransactionModel(
-      id: DateTime.now().microsecondsSinceEpoch.toString(),
-      amount: parsedAmount,
-      date: selectedDateTime!,
-      note: noteText,
-      type: selectedCategoryType!,
-      category: selectedCategoryModel!,
-    );
-    await TransactionDB.instance.transactionAdd(transModel);
+    // final transModel = TransactionModel(
+    //   id: DateTime.now().microsecondsSinceEpoch.toString(),
+    //   amount: parsedAmount,
+    //   date: selectedDateTime!,
+    //   note: noteText,
+    //   type: selectedCategoryType!,
+    //   category: selectedCategoryModel!,
+    // );
+    //==================================After Bloc=========================================
+    BlocProvider.of<TransactionsBloc>(context).add(TransactionAddEvent(
+        id: DateTime.now().microsecondsSinceEpoch.toString(),
+        amount: parsedAmount,
+        dateTime: selectedDateTime!,
+        note: noteText,
+        type: selectedCategoryType!,
+        category: selectedCategoryModel!));
+    // await TransactionDB.instance.transactionAdd(transModel);
 
     showToast(message: 'Saved');
-    TransactionDB.instance.refreshTransUI();
-    await Amounts.instance.totalAmount();
-    Amounts.instance.totalAmount();
+    // TransactionDB.instance.refreshTransUI();
+    // await Amounts.instance.totalAmount();
+    // Amounts.instance.totalAmount();
+    //==================================After Bloc=========================================
     Navigator.of(context).pop();
     // TransactionDB.instance.transactionListNotifier.notifyListeners();
   }

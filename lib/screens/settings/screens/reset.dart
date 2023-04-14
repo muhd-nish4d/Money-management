@@ -16,7 +16,7 @@ Future<void> resetAlert(BuildContext ctx) async {
               onPressed: () async {
                 //after bloc
                 // CategoryDB.instance.categoryClear();
-                TransactionDB.instance.transactionClear();
+                // TransactionDB.instance.transactionClear();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (ctx) => const ScreenSplash(),

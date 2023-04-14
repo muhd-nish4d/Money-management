@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracker/blocs/transactions/transactions_bloc.dart';
 import 'package:tracker/consts/container_shadow.dart';
-import 'package:tracker/db_functions/category/category_db_functions.dart';
-import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
-import 'package:tracker/problems/amount_totals.dart';
 import 'package:tracker/widgets/category/delete_edit_bottum_sheet.dart';
 
+import '../../blocs/category/category_bloc.dart';
 import '../../consts/color.dart';
 import '../../consts/date_parse.dart';
 import '../../widgets/appBar/appbar.dart';
@@ -49,8 +49,8 @@ class _ScreenEditState extends State<ScreenEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backBlack,
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(55),
+      appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(55),
           //AppBar
           child: WidgetAppBar(title: '')),
       body: SingleChildScrollView(
@@ -139,45 +139,85 @@ class _ScreenEditState extends State<ScreenEdit> {
                       //       width: 2,
                       //       color: Color.fromARGB(255, 206, 164, 52),
                       //     )),
-/*
-====================================After Bloc==========================================================
-                      child: DropdownButtonHideUnderline(
-                        child: ButtonTheme(
-                          alignedDropdown: true,
-                          child: DropdownButton(
-                              iconDisabledColor: Colors.grey,
-                              iconEnabledColor: backBlack,
-                              value: categoryId,
-                              borderRadius: BorderRadius.circular(15),
-                              dropdownColor: greyWhite,
-                              hint: const Text(
-                                'Select category',
-                                style: TextStyle(color: backBlack),
-                              ),
-                              style: const TextStyle(color: backBlack),
-                              onChanged: (value) {
-                                setState(() {
-                                  categoryId = value;
-                                });
-                              },
-                              items: (selectedCategoryTypeinEdit ==
-                                          CategoryType.income
-                                      ? CategoryDB().incomeCategoryList
-                                      : CategoryDB().expenseCategoryList)
-                                  .value
-                                  .map((e) {
-                                return DropdownMenuItem(
-                                  value: e.id,
-                                  child: Text(e.name),
-                                  onTap: () {
-                                    selectedCategoryModelinEdit = e;
+
+// ====================================After Bloc==========================================================
+                      // child: DropdownButtonHideUnderline(
+                      //   child: ButtonTheme(
+                      //     alignedDropdown: true,
+                      //     child: DropdownButton(
+                      //         iconDisabledColor: Colors.grey,
+                      //         iconEnabledColor: backBlack,
+                      //         value: categoryId,
+                      //         borderRadius: BorderRadius.circular(15),
+                      //         dropdownColor: greyWhite,
+                      //         hint: const Text(
+                      //           'Select category',
+                      //           style: TextStyle(color: backBlack),
+                      //         ),
+                      //         style: const TextStyle(color: backBlack),
+                      //         onChanged: (value) {
+                      //           setState(() {
+                      //             categoryId = value;
+                      //           });
+                      //         },
+                      //         items: (selectedCategoryTypeinEdit ==
+                      //                     CategoryType.income
+                      //                 ? CategoryDB().incomeCategoryList
+                      //                 : CategoryDB().expenseCategoryList)
+                      //             .value
+                      //             .map((e) {
+                      //           return DropdownMenuItem(
+                      //             value: e.id,
+                      //             child: Text(e.name),
+                      //             onTap: () {
+                      //               selectedCategoryModelinEdit = e;
+                      //             },
+                      //           );
+                      //         }).toList()),
+                      //   ),
+                      // ),
+                      child: BlocBuilder<CategoryBloc, CategoryState>(
+                          builder: (context, state) {
+                        if (state is CategoryShow) {
+                          return DropdownButtonHideUnderline(
+                            child: ButtonTheme(
+                              alignedDropdown: true,
+                              child: DropdownButton<String>(
+                                  iconEnabledColor: Colors.black,
+                                  iconDisabledColor: Colors.grey,
+                                  value: categoryId,
+                                  borderRadius: BorderRadius.circular(15),
+                                  dropdownColor: greyWhite,
+                                  hint: const Text(
+                                    'Select category',
+                                    style: TextStyle(color: backBlack),
+                                  ),
+                                  style: const TextStyle(color: backBlack),
+                                  onChanged: (selectedValue) {
+                                    setState(() {
+                                      categoryId = selectedValue;
+                                    });
                                   },
-                                );
-                              }).toList()),
-                        ),
-                      ),
-=================================================================================================
-                      */
+                                  items: (selectedCategoryTypeinEdit ==
+                                              CategoryType.income
+                                          ? state.incomeCategories
+                                          : state.expenseCategories)
+                                      .map((e) {
+                                    return DropdownMenuItem(
+                                      value: e.id,
+                                      child: Text(e.name),
+                                      onTap: () {
+                                        selectedCategoryModelinEdit = e;
+                                      },
+                                    );
+                                  }).toList()),
+                            ),
+                          );
+                        } else {
+                          return const Text('Something Error');
+                        }
+                      }),
+// =================================================================================================
                     ),
                   ),
                   const SizedBox(
@@ -417,19 +457,28 @@ class _ScreenEditState extends State<ScreenEdit> {
     if (parsedEditAmount == null) {
       return;
     }
-    final transEditModel = TransactionModel(
-      id: widget.transobj.id,
-      amount: parsedEditAmount,
-      date: selectedDateinEdit!,
-      note: textNote,
-      type: selectedCategoryTypeinEdit,
-      category: selectedCategoryModelinEdit!,
-    );
-    await TransactionDB.instance.editTransactionDb(transEditModel);
+    // final transEditModel = TransactionModel(
+    //   id: widget.transobj.id,
+    //   amount: parsedEditAmount,
+    //   date: selectedDateinEdit!,
+    //   note: textNote,
+    //   type: selectedCategoryTypeinEdit,
+    //   category: selectedCategoryModelinEdit!,
+    // );
+    //==================================After Bloc=========================================
+    // await TransactionDB.instance.editTransactionDb(transEditModel);
+    BlocProvider.of<TransactionsBloc>(context).add(TransactionEditEvent(
+        id: widget.transobj.id!,
+        amount: parsedEditAmount,
+        dateTime: selectedDateinEdit!,
+        note: textNote,
+        type: selectedCategoryTypeinEdit,
+        category: selectedCategoryModelinEdit!));
     showToast(message: 'Edited');
-    TransactionDB.instance.refreshTransUI();
-    await Amounts.instance.totalAmount();
-    Amounts.instance.totalAmount();
+    // TransactionDB.instance.refreshTransUI();
+    // await Amounts.instance.totalAmount();
+    // Amounts.instance.totalAmount();
+    //==================================After Bloc=========================================
     Navigator.of(context).pop();
   }
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracker/blocs/transactions/transactions_bloc.dart';
 import 'package:tracker/consts/color.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
 
@@ -33,7 +34,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
     //after bloc
     BlocProvider.of<CategoryBloc>(context).add(CategoryInitialEvent());
     // CategoryDB.instance.refreshUI();
-    TransactionDB.instance.refreshTransUI();
+    BlocProvider.of<TransactionsBloc>(context).add(TransactionsInitialEvent());
+    // TransactionDB.instance.refreshTransUI();
     // Amounts.instance.totalAmount();
     // return Scaffold(
     //   body: Center(

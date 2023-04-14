@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tracker/blocs/category/category_bloc.dart';
+import 'package:tracker/blocs/transactions/transactions_bloc.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
+import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
 import 'package:tracker/models/category/category_model.dart';
 import 'package:tracker/models/transactions/transactions_model.dart';
 import 'package:tracker/screens/splash/splash_screen.dart';
@@ -32,6 +34,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => CategoryBloc(CategoryDBFunctions()),
+        ),
+        BlocProvider(
+          create: (context) => TransactionsBloc(TransactionsDBFunctions()),
         )
       ],
       child: MaterialApp(

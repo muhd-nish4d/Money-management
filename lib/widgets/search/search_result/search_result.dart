@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tracker/consts/color.dart';
 import 'package:tracker/consts/delete_popup.dart';
+import 'package:tracker/widgets/home_screen/status_screen.dart';
 import 'package:tracker/widgets/search/search_screen_cards.dart';
 import '../../../models/transactions/transactions_model.dart';
 import '../../../problems/amount_totals.dart';
@@ -31,110 +32,107 @@ class _WidgerSearchResultState extends State<WidgerSearchResult> {
       width: double.infinity,
       color: backBlack,
       child: ValueListenableBuilder(
-        valueListenable: filterListener,
+        //==================================After Bloc=========================================
+        // valueListenable: filterListener,
+        valueListenable: val,
+        //==================================After Bloc=========================================
         builder: (context, newValue, child) {
           return
               // searchReturn(newValue);
-              filterListener.value.isEmpty
+              //==================================After Bloc=========================================
+              // filterListener.value.isEmpty
+              val.value
+                  //==================================After Bloc=========================================
                   ? const Center(
-                    child: Text(
-                      'No data',
-                      style: TextStyle(
-                          color: greyWhite,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
-                  ):
+                      child: Text(
+                        'No data',
+                        style: TextStyle(
+                            color: greyWhite,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                    )
+                  :
                   // : hi == false
-                      // WidgetSearchListResult(
-                      //     newValue: newValue, query: widget.query);
-                      // : WidgetSearchGridResult(
-                      //     newValue: newValue, query: widget.query);
-           ListView.builder(
-             itemBuilder: (context, index) {
-               final value = newValue[index];
-               if (value.category.name
-                       .toLowerCase()
-                       .contains(widget.query
-                           .toLowerCase()
-                           .trim()) ||
-                   value.amount
-                       .toString()
-                       .toLowerCase()
-                       .contains(widget.query
-                           .toLowerCase()
-                           .trim()) ||
-                   value.note
-                       .toString()
-                       .toLowerCase()
-                       .contains(widget.query
-                           .toLowerCase()
-                           .trim())) {
-                 return Slidable(
-                   startActionPane: ActionPane(
-                       motion: const StretchMotion(),
-                       children: [
-                         SlidableAction(
-                           onPressed: (ctx) async {
-                             alertMassege(context,
-                                 id: value.id.toString());
-                             Amounts().totalAmount();
-                           },
-                           backgroundColor: backBlack,
-                           borderRadius:
-                               BorderRadius.circular(15),
-                           foregroundColor: Colors.red,
-                           icon: Icons.delete,
-                           label: 'Delete',
-                         ),
-                         SlidableAction(
-                           onPressed: (ctx) {
-                             final TransactionModel
-                                 transmodel =
-                                 TransactionModel(
-                                     id: value.id,
-                                     amount: value.amount,
-                                     date: value.date,
-                                     note: value.note,
-                                     type: value.type,
-                                     category:
-                                         value.category);
-    
-                             Navigator.of(context).push(
-                                 MaterialPageRoute(
-                                     builder: (ctx) =>
-                                         ScreenEdit(
-                                             transobj:
-                                                 transmodel)));
-                           },
-                           backgroundColor: backBlack,
-                           borderRadius:
-                               BorderRadius.circular(15),
-                           foregroundColor: Colors.blue,
-                           icon: Icons.edit,
-                           label: 'Edit',
-                         ),
-                       ]),
-                   key: Key(value.id!),
-                   child: WidgetSearchCards(
-                     modelObj: value,
-                     icon: value.type.index == 0
-                         ? const Icon(
-                             Icons.arrow_upward,
-                             color: Colors.green,
-                           )
-                         : const Icon(
-                             Icons.arrow_downward,
-                             color: Colors.red,
-                           ),
-                   ),
-                 );
-               } else {
-                 return Container();
-               }
-             },
-             itemCount: newValue.length,
-           );
+                  // WidgetSearchListResult(
+                  //     newValue: newValue, query: widget.query);
+                  // : WidgetSearchGridResult(
+                  //     newValue: newValue, query: widget.query);
+                  ListView.builder(
+                      itemBuilder: (context, index) {
+                        final value = newValue[index];
+                        if (value.category.name
+                                .toLowerCase()
+                                .contains(widget.query.toLowerCase().trim()) ||
+                            value.amount
+                                .toString()
+                                .toLowerCase()
+                                .contains(widget.query.toLowerCase().trim()) ||
+                            value.note
+                                .toString()
+                                .toLowerCase()
+                                .contains(widget.query.toLowerCase().trim())) {
+                          return Slidable(
+                            startActionPane: ActionPane(
+                                motion: const StretchMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (ctx) async {
+                                      alertMassege(context,
+                                          id: value.id.toString());
+                                      //==================================After Bloc=========================================
+                                      //  Amounts().totalAmount();
+                                      //==================================After Bloc=========================================
+                                    },
+                                    backgroundColor: backBlack,
+                                    borderRadius: BorderRadius.circular(15),
+                                    foregroundColor: Colors.red,
+                                    icon: Icons.delete,
+                                    label: 'Delete',
+                                  ),
+                                  SlidableAction(
+                                    onPressed: (ctx) {
+                                      final TransactionModel transmodel =
+                                          TransactionModel(
+                                              id: value.id,
+                                              amount: value.amount,
+                                              date: value.date,
+                                              note: value.note,
+                                              type: value.type,
+                                              category: value.category);
+
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (ctx) => ScreenEdit(
+                                                  transobj: transmodel)));
+                                    },
+                                    backgroundColor: backBlack,
+                                    borderRadius: BorderRadius.circular(15),
+                                    foregroundColor: Colors.blue,
+                                    icon: Icons.edit,
+                                    label: 'Edit',
+                                  ),
+                                ]),
+                            key: Key(value.id!),
+                            child: WidgetSearchCards(
+                              modelObj: value,
+                              icon: value.type.index == 0
+                                  ? const Icon(
+                                      Icons.arrow_upward,
+                                      color: Colors.green,
+                                    )
+                                  : const Icon(
+                                      Icons.arrow_downward,
+                                      color: Colors.red,
+                                    ),
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                      itemCount: newValue.length,
+                    );
           //  Expanded(
           //     child: GridView.builder(
           //       gridDelegate:
@@ -171,7 +169,7 @@ class _WidgerSearchResultState extends State<WidgerSearchResult> {
           //               backgroundColor: backBlack,
           //             ),
           //             onPressed: () {},
-    
+
           // ? const Center(
           //     child: Text(
           //       'No data',
@@ -221,7 +219,7 @@ class _WidgerSearchResultState extends State<WidgerSearchResult> {
           //                             note: value.note,
           //                             type: value.type,
           //                             category: value.category);
-    
+
           //                     Navigator.of(context).push(
           //                         MaterialPageRoute(
           //                             builder: (ctx) => ScreenEdit(

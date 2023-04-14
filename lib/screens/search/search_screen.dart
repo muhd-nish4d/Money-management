@@ -5,7 +5,9 @@ import 'package:tracker/models/category/category_model.dart';
 import '../../widgets/search/date_rangefilter_date_picker.dart';
 import '../../widgets/search/search_result/search_result.dart';
 
-var filterListener = TransactionDB.instance.transactionFilterNotifier;
+//==================================After Bloc=========================================
+// var filterListener = TransactionDB.instance.transactionFilterNotifier;
+//==================================After Bloc=========================================
 // var selectedValueType = ;
 // var selectedValueDate;
 
@@ -33,45 +35,53 @@ class ScreenSearch extends SearchDelegate {
         itemBuilder: (context) => [
           PopupMenuItem(
               onTap: () async {
-                await TransactionDB.instance.refreshTransUI();
+                //==================================After Bloc=========================================
+                // await TransactionDB.instance.refreshTransUI();
+                //==================================After Bloc=========================================
                 // selectedValueDate = DateTime.now();
               },
               child: const Text('All')),
           PopupMenuItem(
               onTap: () async {
-                await TransactionDB.instance.refreshTransUI();
-                filterListener.value = TransactionDB
-                    .instance.transactionListNotifier.value
-                    .where((element) =>
-                        element.date.day == DateTime.now().day &&
-                        element.date.month == DateTime.now().month &&
-                        element.date.year == DateTime.now().year)
-                    .toList();
+                //==================================After Bloc=========================================
+                // await TransactionDB.instance.refreshTransUI();
+                // filterListener.value = TransactionDB
+                //     .instance.transactionListNotifier.value
+                //     .where((element) =>
+                //         element.date.day == DateTime.now().day &&
+                //         element.date.month == DateTime.now().month &&
+                //         element.date.year == DateTime.now().year)
+                //     .toList();
+                //==================================After Bloc=========================================
                 // selectedValueDate = DateTime.now();
               },
               child: const Text('Today')),
           PopupMenuItem(
               onTap: () async {
-                await TransactionDB.instance.refreshTransUI();
-                filterListener.value = TransactionDB
-                    .instance.transactionListNotifier.value
-                    .where((element) =>
-                        element.date.day == DateTime.now().day - 1 &&
-                        element.date.month == DateTime.now().month &&
-                        element.date.year == DateTime.now().year)
-                    .toList();
+                //==================================After Bloc=========================================
+                // await TransactionDB.instance.refreshTransUI();
+                // filterListener.value = TransactionDB
+                //     .instance.transactionListNotifier.value
+                //     .where((element) =>
+                //         element.date.day == DateTime.now().day - 1 &&
+                //         element.date.month == DateTime.now().month &&
+                //         element.date.year == DateTime.now().year)
+                //     .toList();
+                //==================================After Bloc=========================================
                 // selectedValue = DateTime.now();
               },
               child: const Text('Yesterday')),
           PopupMenuItem(
               onTap: () async {
-                await TransactionDB.instance.refreshTransUI();
-                filterListener.value = TransactionDB
-                    .instance.transactionListNotifier.value
-                    .where((element) =>
-                        element.date.month == DateTime.now().month &&
-                        element.date.year == DateTime.now().year)
-                    .toList();
+                //==================================After Bloc=========================================
+                // await TransactionDB.instance.refreshTransUI();
+                // filterListener.value = TransactionDB
+                //     .instance.transactionListNotifier.value
+                //     .where((element) =>
+                //         element.date.month == DateTime.now().month &&
+                //         element.date.year == DateTime.now().year)
+                //     .toList();
+                //==================================After Bloc=========================================
               },
               child: const Text('Month')),
           // PopupMenuItem(
@@ -96,15 +106,17 @@ class ScreenSearch extends SearchDelegate {
               if (first == null || second == null) {
                 return;
               } else {
-                await TransactionDB.instance.refreshTransUI();
-                filterListener.value = TransactionDB
-                    .instance.transactionFilterNotifier.value
-                    .where((element) =>
-                        element.date.isAfter(
-                            first!.subtract(const Duration(days: 1))) &&
-                        element.date
-                            .isBefore(second!.add(const Duration(days: 1))))
-                    .toList();
+                //==================================After Bloc=========================================
+                // await TransactionDB.instance.refreshTransUI();
+                // filterListener.value = TransactionDB
+                //     .instance.transactionFilterNotifier.value
+                //     .where((element) =>
+                //         element.date.isAfter(
+                //             first!.subtract(const Duration(days: 1))) &&
+                //         element.date
+                //             .isBefore(second!.add(const Duration(days: 1))))
+                //     .toList();
+                //==================================After Bloc=========================================
               }
             },
             child: const WidgetDateRangePicker(),
@@ -118,27 +130,33 @@ class ScreenSearch extends SearchDelegate {
         itemBuilder: (context) => [
           PopupMenuItem(
               onTap: () async {
-                await TransactionDB.instance.refreshTransUI();
-                filterListener = TransactionDB.instance.transactionListNotifier;
+                //==================================After Bloc=========================================
+                // await TransactionDB.instance.refreshTransUI();
+                // filterListener = TransactionDB.instance.transactionListNotifier;
+                //==================================After Bloc=========================================
               },
               child: const Text('All')),
           PopupMenuItem(
               onTap: () async {
-                await TransactionDB.instance.refreshTransUI();
-                filterListener.value = TransactionDB
-                    .instance.transactionListNotifier.value
-                    .where((element) => element.type == CategoryType.income)
-                    .toList();
+                //==================================After Bloc=========================================
+                // await TransactionDB.instance.refreshTransUI();
+                // filterListener.value = TransactionDB
+                //     .instance.transactionListNotifier.value
+                //     .where((element) => element.type == CategoryType.income)
+                //     .toList();
+                //==================================After Bloc=========================================
                 // selectedValueType = CategoryType.income;
               },
               child: const Text('Income')),
           PopupMenuItem(
               onTap: () async {
-                await TransactionDB.instance.refreshTransUI();
-                filterListener.value = TransactionDB
-                    .instance.transactionListNotifier.value
-                    .where((element) => element.type == CategoryType.expense)
-                    .toList();
+                //==================================After Bloc=========================================
+                // await TransactionDB.instance.refreshTransUI();
+                // filterListener.value = TransactionDB
+                //     .instance.transactionListNotifier.value
+                //     .where((element) => element.type == CategoryType.expense)
+                //     .toList();
+                //==================================After Bloc=========================================
                 // selectedValueType = CategoryType.expense;
               },
               child: const Text('Expense')),
@@ -151,7 +169,9 @@ class ScreenSearch extends SearchDelegate {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
         onPressed: () {
-          TransactionDB.instance.refreshTransUI();
+          //==================================After Bloc=========================================
+          // TransactionDB.instance.refreshTransUI();
+          //==================================After Bloc=========================================
           close(context, null);
         },
         icon: const Icon(Icons.arrow_back));

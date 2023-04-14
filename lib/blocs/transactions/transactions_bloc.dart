@@ -9,10 +9,42 @@ part 'transactions_state.dart';
 
 class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
   final TransactionsDBFunctions transactionsDBFun;
-  List<TransactionModel> transactons = [];
+  List<TransactionModel> transactions = [];
   TransactionsBloc(this.transactionsDBFun) : super(TransactionsInitialState()) {
-    on<TransactionsInitialEvent>((event, emit) {
+    on<TransactionsInitialEvent>((event, emit) async {
       emit(TransactionsLodingState());
+      await _getTransactions();
+      emit(TransactionsShowState(transactions: transactions));
+    });
+    on<TransactionAddEvent>((event, emit) async {
+      emit(TransactionsLodingState());
+      await _addTransactions(
+          id: event.id,
+          note: event.note,
+          amount: event.amount,
+          date: event.dateTime,
+          type: event.type,
+          category: event.category);
+      await _getTransactions();
+      emit(TransactionsShowState(transactions: transactions));
+    });
+    on<TransactionEditEvent>((event, emit) async {
+      emit(TransactionsLodingState());
+      await _editTransactions(
+          id: event.id,
+          note: event.note,
+          amount: event.amount,
+          date: event.dateTime,
+          type: event.type,
+          category: event.category);
+      await _getTransactions();
+      emit(TransactionsShowState(transactions: transactions));
+    });
+    on<TransactionsDeleteEvent>((event, emit) async {
+      emit(TransactionsLodingState());
+      await _deleteTransactions(id: event.id);
+      await _getTransactions();
+      emit(TransactionsShowState(transactions: transactions));
     });
   }
 
@@ -20,7 +52,7 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
   Future<void> _getTransactions() async {
     await transactionsDBFun
         .getAllTransactions()
-        .then((value) => transactons = value);
+        .then((value) => transactions = value);
   }
 
   Future<void> _addTransactions({

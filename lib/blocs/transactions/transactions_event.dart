@@ -47,8 +47,8 @@ class TransactionEditEvent extends TransactionsEvent {
 }
 
 //Delete Event
-class TransctionsDeleteEvent extends TransactionsEvent {
+class TransactionsDeleteEvent extends TransactionsEvent {
   final String id;
 
-  const TransctionsDeleteEvent({required this.id});
+  const TransactionsDeleteEvent({required this.id});
 }
