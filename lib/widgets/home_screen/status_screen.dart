@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/amount/amount_bloc.dart';
 import '../../consts/color.dart';
+import '../../screens/chart_screens/circle_chart.dart';
 
 //==================================After Bloc=========================================
 ValueNotifier val = ValueNotifier(0);
@@ -39,9 +40,10 @@ class WidgetSatusScreen extends StatelessWidget {
             BlocBuilder<AmountBloc, AmountState>(
               builder: (context, state) {
                 if (state is AmountLoadingState) {
-                  return Center(child: CircularProgressIndicator(),);
-                }
-                else if (state is AmountShowState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is AmountShowState) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -88,120 +90,117 @@ class WidgetSatusScreen extends StatelessWidget {
                                         fontWeight: FontWeight.bold),
                               ),
                             ),
-                            
                           ]),
                         ),
                       ),
                       Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        children: const [
-                                          Icon(
-                                            Icons.arrow_upward_rounded,
-                                            color: backBlack,
-                                          ),
-                                          Text(
-                                            'Income',
-                                            style: TextStyle(
-                                                color: backBlack,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 35,
-                                        width: 125,
-                                        child: Center(
-                                            child: Text(
-                                          '₹${state.incomeAmount}',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              color: backBlack,
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: 'Inter'),
-                                        )),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        children: const [
-                                          Icon(
-                                            Icons.arrow_downward_rounded,
-                                            color: backBlack,
-                                          ),
-                                          Text(
-                                            'Expense',
-                                            style: TextStyle(
-                                                color: backBlack,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 125,
-                                        height: 35,
-                                        child: Center(
-                                            child: Text(
-                                          '₹${state.expenceAmount}',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              color: backBlack,
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: 'Inter'),
-                                        )),
-                                      ),
-                                    ],
-                                  ),
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          elevation: 10,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25)),
-                                          backgroundColor: backBlack),
-                                      onPressed: () {
-                                        //==================================After Bloc=========================================
-                                        // Navigator.of(context).push(MaterialPageRoute(
-                                        //     builder: (ctx) => const ScreenCircleChart()));
-                                        // Amounts().totalAmount();
-                                        //==================================After Bloc=========================================
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 9),
-                                        child: Column(
-                                          children: const [
-                                            Icon(Icons.analytics_rounded,
-                                                color: greyWhite),
-                                            SizedBox(),
-                                            Text(
-                                              'Observe',
-                                              style: TextStyle(
-                                                color: greyWhite,
-                                              ),
-                                            )
-                                          ],
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.arrow_upward_rounded,
+                                      color: backBlack,
+                                    ),
+                                    Text(
+                                      'Income',
+                                      style: TextStyle(
+                                          color: backBlack,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 35,
+                                  width: 125,
+                                  child: Center(
+                                      child: Text(
+                                    '₹${state.incomeAmount}',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        color: backBlack,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Inter'),
+                                  )),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.arrow_downward_rounded,
+                                      color: backBlack,
+                                    ),
+                                    Text(
+                                      'Expense',
+                                      style: TextStyle(
+                                          color: backBlack,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 125,
+                                  height: 35,
+                                  child: Center(
+                                      child: Text(
+                                    '₹${state.expenceAmount}',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        color: backBlack,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Inter'),
+                                  )),
+                                ),
+                              ],
+                            ),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 10,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(25)),
+                                    backgroundColor: backBlack),
+                                onPressed: () {
+                                  // ==================================After Bloc=========================================
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (ctx) =>
+                                          const ScreenCircleChart()));
+                                  // Amounts().totalAmount();
+                                  //==================================After Bloc=========================================
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 9),
+                                  child: Column(
+                                    children: const [
+                                      Icon(Icons.analytics_rounded,
+                                          color: greyWhite),
+                                      SizedBox(),
+                                      Text(
+                                        'Observe',
+                                        style: TextStyle(
+                                          color: greyWhite,
                                         ),
-                                      ))
-                                ]),
+                                      )
+                                    ],
+                                  ),
+                                ))
+                          ]),
                     ],
                   );
                 } else {
-                  return Text('some error');
+                  return const Text('some error');
                 }
               },
             ),
