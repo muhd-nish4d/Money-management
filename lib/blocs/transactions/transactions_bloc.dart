@@ -7,6 +7,8 @@ import 'package:tracker/models/transactions/transactions_model.dart';
 part 'transactions_event.dart';
 part 'transactions_state.dart';
 
+List<TransactionModel> transactionfor = [];
+
 class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
   final TransactionsDBFunctions transactionsDBFun;
   List<TransactionModel> transactions = [];
@@ -46,6 +48,10 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
       await _getTransactions();
       emit(TransactionsShowState(transactions: transactions));
     });
+    on<TransactionsClearEvent>((event, emit) async {
+      emit(TransactionsLodingState());
+      await _clearTransactions();
+    });
   }
 
   //Helping functions
@@ -53,6 +59,7 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     await transactionsDBFun
         .getAllTransactions()
         .then((value) => transactions = value);
+    transactionfor = transactions;
   }
 
   Future<void> _addTransactions({
@@ -91,5 +98,9 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
 
   Future<void> _deleteTransactions({required String id}) async {
     await transactionsDBFun.deleteTransacions(id);
+  }
+
+  Future<void> _clearTransactions() async {
+    await transactionsDBFun.clearTransactions();
   }
 }

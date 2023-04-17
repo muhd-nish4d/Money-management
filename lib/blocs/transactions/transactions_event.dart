@@ -52,3 +52,5 @@ class TransactionsDeleteEvent extends TransactionsEvent {
 
   const TransactionsDeleteEvent({required this.id});
 }
+
+class TransactionsClearEvent extends TransactionsEvent {}

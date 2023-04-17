@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracker/blocs/filter/filter_bloc.dart';
 import 'package:tracker/consts/color.dart';
-import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
-import 'package:tracker/models/category/category_model.dart';
+import '../../models/category/category_model.dart';
+import '../../models/transactions/transactions_model.dart';
 import '../../widgets/search/date_rangefilter_date_picker.dart';
 import '../../widgets/search/search_result/search_result.dart';
 
-//==================================After Bloc=========================================
-// var filterListener = TransactionDB.instance.transactionFilterNotifier;
-//==================================After Bloc=========================================
-// var selectedValueType = ;
-// var selectedValueDate;
-
 class ScreenSearch extends SearchDelegate {
-  // final DateTime selectedDateFirst = firstSelctedDate ??= DateTime.now();
-  // final DateTime selectedDateLast =
-  //     lastSelectedDate ??= DateTime.now().subtract(const Duration(days: 10));
+  List<TransactionModel>? filterItems;
   @override
   ThemeData appBarTheme(BuildContext context) {
     return ThemeData(appBarTheme: const AppBarTheme(color: gradBlue));
@@ -26,15 +20,18 @@ class ScreenSearch extends SearchDelegate {
       IconButton(
           onPressed: () {
             query = '';
+            BlocProvider.of<FilterBloc>(context)
+                .add(const FilterDataEvent('all'));
           },
           icon: const Icon(Icons.clear)),
-          
       PopupMenuButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         icon: const Icon(Icons.calendar_month_rounded),
         itemBuilder: (context) => [
           PopupMenuItem(
               onTap: () async {
+                BlocProvider.of<FilterBloc>(context)
+                    .add(const FilterDataEvent('all'));
                 //==================================After Bloc=========================================
                 // await TransactionDB.instance.refreshTransUI();
                 //==================================After Bloc=========================================
@@ -43,6 +40,8 @@ class ScreenSearch extends SearchDelegate {
               child: const Text('All')),
           PopupMenuItem(
               onTap: () async {
+                BlocProvider.of<FilterBloc>(context)
+                    .add(const FilterDataEvent('today'));
                 //==================================After Bloc=========================================
                 // await TransactionDB.instance.refreshTransUI();
                 // filterListener.value = TransactionDB
@@ -58,9 +57,28 @@ class ScreenSearch extends SearchDelegate {
               child: const Text('Today')),
           PopupMenuItem(
               onTap: () async {
-                //==================================After Bloc=========================================
+                // ==================================After Bloc=========================================
+
                 // await TransactionDB.instance.refreshTransUI();
-                // filterListener.value = TransactionDB
+                // filterListener.value =
+
+                // BlocBuilder<TransactionsBloc, TransactionsState>(
+                //   builder: (context, state) {
+                //     if (state is TransactionsShowState) {
+                //       filterItems = state.transactions
+                //           .where((element) =>
+                //               element.date.day == DateTime.now().day - 1 &&
+                //               element.date.month == DateTime.now().month &&
+                //               element.date.year == DateTime.now().year)
+                //           .toList();
+                //     }
+                //     return Container();
+                //   },
+                // );
+                BlocProvider.of<FilterBloc>(context)
+                    .add(const FilterDataEvent('yesterdaty'));
+
+                // TransactionDB
                 //     .instance.transactionListNotifier.value
                 //     .where((element) =>
                 //         element.date.day == DateTime.now().day - 1 &&
@@ -73,6 +91,8 @@ class ScreenSearch extends SearchDelegate {
               child: const Text('Yesterday')),
           PopupMenuItem(
               onTap: () async {
+                BlocProvider.of<FilterBloc>(context)
+                    .add(const FilterDataEvent('lastMonth'));
                 //==================================After Bloc=========================================
                 // await TransactionDB.instance.refreshTransUI();
                 // filterListener.value = TransactionDB
@@ -106,16 +126,19 @@ class ScreenSearch extends SearchDelegate {
               if (first == null || second == null) {
                 return;
               } else {
+                BlocProvider.of<FilterBloc>(context)
+                    .add(FilterfFromToEvent(from: first!, end: second!));
+                //==================================Aft
                 //==================================After Bloc=========================================
                 // await TransactionDB.instance.refreshTransUI();
                 // filterListener.value = TransactionDB
-                //     .instance.transactionFilterNotifier.value
-                //     .where((element) =>
-                //         element.date.isAfter(
-                //             first!.subtract(const Duration(days: 1))) &&
-                //         element.date
-                //             .isBefore(second!.add(const Duration(days: 1))))
-                //     .toList();
+                // .instance.transactionFilterNotifier.value
+                // .where((element) =>
+                //     element.date.isAfter(
+                //         first!.subtract(const Duration(days: 1))) &&
+                //     element.date
+                //         .isBefore(second!.add(const Duration(days: 1))))
+                // .toList();
                 //==================================After Bloc=========================================
               }
             },
@@ -130,6 +153,8 @@ class ScreenSearch extends SearchDelegate {
         itemBuilder: (context) => [
           PopupMenuItem(
               onTap: () async {
+                BlocProvider.of<FilterBloc>(context)
+                    .add(const FilterDataEvent('all'));
                 //==================================After Bloc=========================================
                 // await TransactionDB.instance.refreshTransUI();
                 // filterListener = TransactionDB.instance.transactionListNotifier;
@@ -138,6 +163,8 @@ class ScreenSearch extends SearchDelegate {
               child: const Text('All')),
           PopupMenuItem(
               onTap: () async {
+                BlocProvider.of<FilterBloc>(context)
+                    .add(const FilterTypeEvent(CategoryType.income));
                 //==================================After Bloc=========================================
                 // await TransactionDB.instance.refreshTransUI();
                 // filterListener.value = TransactionDB
@@ -150,6 +177,8 @@ class ScreenSearch extends SearchDelegate {
               child: const Text('Income')),
           PopupMenuItem(
               onTap: () async {
+                BlocProvider.of<FilterBloc>(context)
+                    .add(const FilterTypeEvent(CategoryType.expense));
                 //==================================After Bloc=========================================
                 // await TransactionDB.instance.refreshTransUI();
                 // filterListener.value = TransactionDB
@@ -179,12 +208,18 @@ class ScreenSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return WidgerSearchResult(query: query);
+    return WidgerSearchResult(
+      query: query,
+      filter: filterItems ?? [],
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return WidgerSearchResult(query: query);
+    return WidgerSearchResult(
+      query: query,
+      filter: filterItems ?? [],
+    );
   }
 }
 //Yellow = fromARGB(255, 206, 164, 52)

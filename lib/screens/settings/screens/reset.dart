@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tracker/db_functions/category/category_db_functions.dart';
-import 'package:tracker/db_functions/transactions/transaction_db_functions.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracker/blocs/transactions/transactions_bloc.dart';
 import '../../splash/splash_screen.dart';
 
 Future<void> resetAlert(BuildContext ctx) async {
@@ -17,6 +16,8 @@ Future<void> resetAlert(BuildContext ctx) async {
                 //after bloc
                 // CategoryDB.instance.categoryClear();
                 // TransactionDB.instance.transactionClear();
+                BlocProvider.of<TransactionsBloc>(context)
+                    .add(TransactionsClearEvent());
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (ctx) => const ScreenSplash(),

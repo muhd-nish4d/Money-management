@@ -105,4 +105,10 @@ class TransactionsDBFunctions {
     final box = await transactionsOpenBox();
     await box.put(transaction.id, transaction);
   }
+
+  //Clear Transactions
+  Future<void> clearTransactions() async {
+    final box = await transactionsOpenBox();
+    await box.clear();
+  }
 }

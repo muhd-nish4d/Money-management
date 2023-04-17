@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracker/blocs/filter/filter_bloc.dart';
 import '../../consts/color.dart';
 import '../../screens/search/search_screen.dart';
 import '../transactions/recent_transations.dart';
@@ -36,10 +38,14 @@ class WidgetRecentScreen extends StatelessWidget {
                 const Text(
                   'Recent',
                   style: TextStyle(
-                      color: backBlack, fontWeight: FontWeight.bold, fontSize: 20),
+                      color: backBlack,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
                 ),
                 TextButton(
                     onPressed: () {
+                      BlocProvider.of<FilterBloc>(context)
+                          .add(const FilterDataEvent('all'));
                       showSearch(
                         context: context,
                         delegate: ScreenSearch(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:tracker/blocs/filter/filter_bloc.dart';
 import 'package:tracker/consts/color.dart';
 import 'package:tracker/consts/delete_popup.dart';
 import 'package:tracker/widgets/search/search_screen_cards.dart';
@@ -10,9 +11,11 @@ import '../../../screens/transactions/edit_screen.dart';
 
 class WidgerSearchResult extends StatefulWidget {
   final String query;
+  final List<TransactionModel> filter;
   const WidgerSearchResult({
     super.key,
     required this.query,
+    required this.filter,
   });
 
   @override
@@ -28,46 +31,18 @@ class _WidgerSearchResultState extends State<WidgerSearchResult> {
         height: double.infinity,
         width: double.infinity,
         color: backBlack,
-        child:
-            // ValueListenableBuilder(
-            //==================================After Bloc=========================================
-            // valueListenable: filterListener,
-            // valueListenable: val,
-            //==================================After Bloc=========================================
-            // builder: (context, newValue, child) {
-            // return
-            // searchReturn(newValue);
-            //==================================After Bloc=========================================
-            // filterListener.value.isEmpty
-            // val.value
-            //     //==================================After Bloc=========================================
-            //     ? const Center(
-            //         child: Text(
-            //           'No data',
-            //           style: TextStyle(
-            //               color: greyWhite,
-            //               fontWeight: FontWeight.bold,
-            //               fontSize: 20),
-            //         ),
-            //       )
-            //     :
-            // : hi == false
-            // WidgetSearchListResult(
-            //     newValue: newValue, query: widget.query);
-            // : WidgetSearchGridResult(
-            //     newValue: newValue, query: widget.query);
-            BlocBuilder<TransactionsBloc, TransactionsState>(
+        child: BlocBuilder<FilterBloc, FilterState>(
           builder: (context, state) {
-            if (state is TransactionsInitialState) {
+            if (state is FilterInitialState) {
               return const SizedBox();
-            } else if (state is TransactionsLodingState) {
+            } else if (state is MyLoadingState) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is TransactionsShowState) {
+            } else if (state is MyFilteredState) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final value = state.transactions[index];
+                  final value = state.data[index];
                   if (value.category.name
                           .toLowerCase()
                           .contains(widget.query.toLowerCase().trim()) ||
@@ -135,13 +110,14 @@ class _WidgerSearchResultState extends State<WidgerSearchResult> {
                     return Container();
                   }
                 },
-                itemCount: state.transactions.length,
+                itemCount: state.data.length,
               );
             } else {
               return const Text('Some error');
             }
           },
         ));
+
     //  Expanded(
     //     child: GridView.builder(
     //       gridDelegate:

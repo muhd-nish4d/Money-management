@@ -27,8 +27,8 @@ class _ScreenCircleChartState extends State<ScreenCircleChart> {
     return Scaffold(
       body: pages[currentSelectedIndex],
       backgroundColor: backBlack,
-      appBar:PreferredSize(
-          preferredSize: const Size.fromHeight(55),
+      appBar:const PreferredSize(
+          preferredSize:  Size.fromHeight(55),
           //AppBar
           child: WidgetAppBar(title: 'Observe')),
       bottomNavigationBar: BottomNavigationBar(

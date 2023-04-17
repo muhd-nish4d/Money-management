@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pie_chart/pie_chart.dart';
 import '../../blocs/amount/amount_bloc.dart';
+import '../../consts/color.dart';
 
 // ValueNotifier<List<TransactionModel>> chartNotifier =
 //     ValueNotifier(TransactionDB.instance.transactionListNotifier.value);
@@ -12,7 +13,7 @@ class ScreenFullChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, double> totalmappp = {};
-    // var total = 0;
+    double total = 0;
     return BlocBuilder<AmountBloc, AmountState>(
       builder: (context, state) {
         if (state is AmountLoadingState) {
@@ -20,16 +21,26 @@ class ScreenFullChart extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (state is AmountShowState) {
+          total = state.incomeAmount + state.expenceAmount;
           Map<String, double> totalBlocMap = {
             'Income': state.incomeAmount,
             'Expense': state.expenceAmount,
           };
           totalmappp = totalBlocMap;
-          return PieChart(
-            legendOptions: const LegendOptions(
-                legendTextStyle: TextStyle(color: Colors.white)),
-            dataMap: totalmappp,
-          );
+          return total == 0
+              ? const Center(
+                  child: Text(
+                  'No Data',
+                  style: TextStyle(
+                      color: greyWhite,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ))
+              : PieChart(
+                  legendOptions: const LegendOptions(
+                      legendTextStyle: TextStyle(color: Colors.white)),
+                  dataMap: totalmappp,
+                );
         } else {
           return Container();
         }

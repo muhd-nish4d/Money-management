@@ -33,22 +33,31 @@ class _ScreenExpenseChartState extends State<ScreenExpenseChart> {
               expenseChartData[item.category.name] = item.amount;
             }
           }
-          return PieChart(
-            // centerTextStyle: TextStyle(color: Colors.white),
-            // animationDuration: Duration(seconds: 1),
-            dataMap: expenseChartData,
-            legendOptions: const LegendOptions(
-                legendTextStyle: TextStyle(color: Colors.white)),
+          return expenseChartData.isEmpty
+              ? const Center(
+                  child: Text(
+                  'No Data',
+                  style: TextStyle(
+                      color: greyWhite,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ))
+              : PieChart(
+                  // centerTextStyle: TextStyle(color: Colors.white),
+                  // animationDuration: Duration(seconds: 1),
+                  dataMap: expenseChartData,
+                  legendOptions: const LegendOptions(
+                      legendTextStyle: TextStyle(color: Colors.white)),
 
-            chartValuesOptions: const ChartValuesOptions(
-              // showChartValuesInPercentage: true,
-              chartValueStyle: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-              showChartValueBackground: false,
-            ),
-          );
+                  chartValuesOptions: const ChartValuesOptions(
+                    // showChartValuesInPercentage: true,
+                    chartValueStyle: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    showChartValueBackground: false,
+                  ),
+                );
         }
         return Container();
       },
