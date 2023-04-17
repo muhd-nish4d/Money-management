@@ -3,15 +3,12 @@ import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracker/blocs/amount/amount_bloc.dart';
 import 'package:tracker/blocs/transactions/transactions_bloc.dart';
 import 'package:tracker/consts/color.dart';
-import 'package:tracker/db_functions/category/category_db_functions.dart';
-
 import 'package:tracker/screens/home/home_screen.dart';
 
 import '../../blocs/category/category_bloc.dart';
-import '../../db_functions/transactions/transaction_db_functions.dart';
-
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
 
@@ -35,6 +32,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
     BlocProvider.of<CategoryBloc>(context).add(CategoryInitialEvent());
     // CategoryDB.instance.refreshUI();
     BlocProvider.of<TransactionsBloc>(context).add(TransactionsInitialEvent());
+    BlocProvider.of<AmountBloc>(context).add(AmountInitialEvent());
     // TransactionDB.instance.refreshTransUI();
     // Amounts.instance.totalAmount();
     // return Scaffold(

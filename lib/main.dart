@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tracker/blocs/amount/amount_bloc.dart';
 import 'package:tracker/blocs/category/category_bloc.dart';
 import 'package:tracker/blocs/transactions/transactions_bloc.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
@@ -37,7 +38,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => TransactionsBloc(TransactionsDBFunctions()),
-        )
+        ),
+        BlocProvider(
+          create: (context) => AmountBloc(TransactionsDBFunctions()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

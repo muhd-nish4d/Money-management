@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracker/blocs/transactions/transactions_bloc.dart';
 import 'package:tracker/consts/toast.dart';
 
-import '../db_functions/transactions/transaction_db_functions.dart';
-import '../problems/amount_totals.dart';
+import '../blocs/amount/amount_bloc.dart';
 
 Future<void> alertMassege(BuildContext ctx, {required String id}) async {
   return showDialog(
@@ -22,6 +21,7 @@ Future<void> alertMassege(BuildContext ctx, {required String id}) async {
                     .add(TransactionsDeleteEvent(id: id));
                 //==================================After Bloc=========================================
                 showToast(message: 'Deleted');
+                BlocProvider.of<AmountBloc>(context).add(AmountInitialEvent());
                 //==================================After Bloc=========================================
                 // await Amounts.instance.totalAmount();
                 // Amounts.instance.totalAmount();

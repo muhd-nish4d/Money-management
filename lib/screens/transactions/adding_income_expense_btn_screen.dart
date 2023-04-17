@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracker/blocs/amount/amount_bloc.dart';
 import 'package:tracker/blocs/category/category_bloc.dart';
 import 'package:tracker/blocs/transactions/transactions_bloc.dart';
 import 'package:tracker/db_functions/category/category_db_functions.dart';
@@ -500,6 +501,10 @@ class _ScreenAddTransBtnState extends State<ScreenAddTransBtn> {
         note: noteText,
         type: selectedCategoryType!,
         category: selectedCategoryModel!));
+    // BlocProvider.of<AmountBloc>(context).add(
+    //     AmountCalcuteEvent(amuount: parsedAmount, type: selectedCategoryType!));
+    BlocProvider.of<AmountBloc>(context).add(AmountInitialEvent());
+
     // await TransactionDB.instance.transactionAdd(transModel);
 
     showToast(message: 'Saved');

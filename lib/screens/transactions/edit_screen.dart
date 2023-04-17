@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracker/blocs/amount/amount_bloc.dart';
 import 'package:tracker/blocs/transactions/transactions_bloc.dart';
 import 'package:tracker/consts/container_shadow.dart';
 import 'package:tracker/models/category/category_model.dart';
@@ -474,6 +475,7 @@ class _ScreenEditState extends State<ScreenEdit> {
         note: textNote,
         type: selectedCategoryTypeinEdit,
         category: selectedCategoryModelinEdit!));
+    BlocProvider.of<AmountBloc>(context).add(AmountInitialEvent());
     showToast(message: 'Edited');
     // TransactionDB.instance.refreshTransUI();
     // await Amounts.instance.totalAmount();
